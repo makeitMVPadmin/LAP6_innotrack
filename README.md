@@ -38,10 +38,12 @@ New tech graduates or career-transitioners often struggle to stay updated with t
 
 ### Others
 - [Vite](https://vite.dev/)
+- [SASS](https://sass-lang.com/)
 
 ### Mockups
 
 ### ERD
+![InnoTrack ERD](public/readme/ERD-velocity1.png)
 
 ## Installation
 1. run `npm install` to install dependencies
