@@ -43,7 +43,7 @@ New tech graduates or career-transitioners often struggle to stay updated with t
 ### Mockups
 
 ### ERD
-![InnoTrack ERD](public/readme/erd_velocity1.png)
+![InnoTrack ERD](public/readme/erd.png)
 
 ## Installation
 1. run `npm install` to install dependencies
