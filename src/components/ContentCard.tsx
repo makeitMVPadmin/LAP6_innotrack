@@ -32,13 +32,13 @@ export default function ContentCard() {
     return (
         <div className="w-screen h-full">
         
-            <Card className="h-full w-full">
+            <Card className="h-full w-5/6">
                 <img 
                     src={content?.picture || "https://placehold.co/600x400?text=Place+Holder"}
                     alt="Article cover"
                     className="w-full h-48 object-cover"
                 />
-                <CardHeader>
+                <CardHeader className="text-left">
                     <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground font-medium">
                         Technology
@@ -56,22 +56,23 @@ export default function ContentCard() {
                         </Button>
                     </div>
                     </div>
-                <CardTitle>{content?.title || "Untitled"}</CardTitle>
-                <CardDescription>{content?.publisher || "Unknown Author"}</CardDescription>
+                <CardTitle className="text-left">{content?.title || "Untitled"}</CardTitle>
+                <CardDescription className="text-left">{content?.publisher || "Unknown Author"}</CardDescription>
                 </CardHeader>
                 {isExpanded && (
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-4 text-left">
                     <div className="space-y-2">
+                        <hr />
                         <h3 className="font-semibold">Summary</h3>
                         <p className="text-muted-foreground">
-                        Artificial Intelligence is revolutionizing the way we approach software development...
+                            {content?.summary || "This is an empty summary."}
                         </p>
                     </div>
                     
                     <div className="space-y-2">
-                        <h3 className="font-semibold">Full Content</h3>
+                        <hr />
                         <p className="text-muted-foreground">
-                        Recent advancements in machine learning models have enabled developers...
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                         </p>
                     </div>
                     </CardContent>
