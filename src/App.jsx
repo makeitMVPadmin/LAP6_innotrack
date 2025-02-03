@@ -1,20 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import { Button } from "@/components/ui/button"
-import viteLogo from '/vite.svg'
-import './App.css'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import { Button } from "@/components/ui/button";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import AddBookmark from "./components/AddBookmark/AddBookmark";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -27,20 +19,8 @@ function App() {
         </a>
       </div>
       <h1>Test + React</h1>
+      <AddBookmark /> {/* This is the add bookmark popup*/}
       <div className="card">
-        <Dialog>
-          <DialogTrigger>Open</DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. This will permanently delete your account
-                and remove your data from our servers.
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
@@ -53,7 +33,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
