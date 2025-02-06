@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.5",
-    "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^11.2.0",
@@ -23,9 +23,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
