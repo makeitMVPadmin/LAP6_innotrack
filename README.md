@@ -22,9 +22,8 @@ InnoTrack is a collaborative platform designed to help new tech graduates and ca
 - **Frontend Framework:** React
 - **Build Tool:** Vite
 - **Package Manager:** npm
-- **UI Framework:** [Your UI framework]
-- **State Management:** [Your state management solution]
-- **API Integration:** [Your API solution]
+- **UI Framework:** ShadCN UI, Tailwind
+- **API Integration:** Firebase
 
 ## 🚀 Getting Started
 
