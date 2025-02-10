@@ -16,6 +16,9 @@ function AddBookmark() {
   const [newCategory, setNewCategory] = useState("");
   const [creating, setCreating] = useState(false);
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(true);
+
   const handleAddCategory = () => {
     if (newCategory.trim()) {
       setCategories([...categories, newCategory]);
@@ -26,6 +29,8 @@ function AddBookmark() {
 
   return (
     <div>
+      <Button variant="outline" onClick={handleOpen}></Button>
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline">Bookmark</Button>
@@ -58,6 +63,9 @@ function AddBookmark() {
               Create A New Category
             </Button>
           )}
+          <Button variant="outline" onClick={handleClose}>
+            Close
+          </Button>
         </DialogContent>
       </Dialog>
     </div>
