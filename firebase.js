@@ -14,8 +14,9 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-if (typeof window !== "undefined") {
-  import("firebase/analytics").then(({ getAnalytics }) => {
-    getAnalytics(app);
-  });
-}
+// Only initialize analytics in browser environment
+// if (typeof window !== "undefined") {
+//   import("firebase/analytics").then(({ getAnalytics }) => {
+//     getAnalytics(app);
+//   });
+// }

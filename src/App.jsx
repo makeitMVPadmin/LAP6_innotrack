@@ -5,6 +5,7 @@ import AddBookmark from "./components/AddBookmark";
 import ContentCard from "./components/ContentCard";
 import TechAreaTab from "./components/TechAreaTab";
 import ContentList from "./components/ContentList";
+// import fetchUsers from "./functions/fetchUsers";
 
 const hardCodedTechAreas = [
   { id: "all", name: "All" },
@@ -27,6 +28,7 @@ function App() {
       <ContentCard></ContentCard>
       <AddBookmark></AddBookmark>
       <ContentList></ContentList>
+      {/* <fetchUsers></fetchUsers> */}
     </>
   );
 }
