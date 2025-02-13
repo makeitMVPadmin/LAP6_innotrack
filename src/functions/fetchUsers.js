@@ -76,3 +76,37 @@
 // test();
 
 // export default fetchUsers;
+
+//*************************************************************************************** */
+//THIS is NYAJAL testing to see users with changes made to firebase.js
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useState, useEffect } from "react";
+
+export const useUsersListener = () => {
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "users"),
+      (querySnapshot) => {
+        const userList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        console.log("Real-time Users Update:", userList);
+        setUsers(userList);
+      },
+      (error) => {
+        setError(error);
+        console.error("Error fetching users:", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  return { users, error };
+};
