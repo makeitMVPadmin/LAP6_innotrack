@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import "./App.css";
 import AddBookmark from "./components/AddBookmark";
-import ContentCard from "./components/ContentCard";
+// import ContentCard from "./components/ContentCard";
 import TechAreaTab from "./components/TechAreaTab";
-import ContentList from "./components/ContentList";
+// import ContentList from "./components/ContentList";
 
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
