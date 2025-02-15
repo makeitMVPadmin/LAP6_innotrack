@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, initializeFirestore } from "firebase/firestore";
 
+// Firebase configuration using Vite environment variables for client side
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -11,12 +12,17 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+
+// Initialize Firestore with settings for Node.js environment
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+  useFetchStreams: false,
+});
 
 // Only initialize analytics in browser environment
-// if (typeof window !== "undefined") {
-//   import("firebase/analytics").then(({ getAnalytics }) => {
-//     getAnalytics(app);
-//   });
-// }
+if (typeof window !== "undefined") {
+  const { getAnalytics } = await import("firebase/analytics");
+  const analytics = getAnalytics(app);
+}

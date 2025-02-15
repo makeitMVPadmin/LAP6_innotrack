@@ -16,7 +16,7 @@ export const useContentListener = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Real-time Content Update:", updatedContent); // 🔍 Check in console
+        console.log("Real-time Content Update:", updatedContent);
         setContentList(updatedContent);
       },
 
