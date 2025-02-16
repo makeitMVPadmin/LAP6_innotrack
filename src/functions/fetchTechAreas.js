@@ -32,11 +32,21 @@ export default async function fetchTechAreas() {
             id: doc.id,
             name: doc.data().name,
         }));
-        console.log(techAreas);
+
         return techAreas;
     } catch (error) {
         console.log("Error fetching tech areas: ", error);
         return [];
     }
 }
-fetchTechAreas();
+
+async function test() {
+    try {
+        const techAreas = await fetchTechAreas();
+        console.log("Fetched tech areas: \n", techAreas);
+    } catch (error) {
+        console.error("Test error:", error);
+    }
+}
+
+test();
