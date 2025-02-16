@@ -22,7 +22,15 @@ export const db = initializeFirestore(app, {
 });
 
 // Only initialize analytics in browser environment
+// if (typeof window !== "undefined") {
+//   const { getAnalytics } = await import("firebase/analytics");
+//   const analytics = getAnalytics(app);
+// }
+
+// Only initialize analytics in browser environment
 if (typeof window !== "undefined") {
-  const { getAnalytics } = await import("firebase/analytics");
-  const analytics = getAnalytics(app);
+  (async () => {
+    const { getAnalytics } = await import("firebase/analytics");
+    const analytics = getAnalytics(app);
+  })();
 }
