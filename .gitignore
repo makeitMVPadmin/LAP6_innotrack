@@ -23,4 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+<<<<<<< HEAD
+launchacademyp6-firebase-adminsdk-fbsvc-f4e991968e.json
+=======
 launchacademyp6-firebase-adminsdk-fbsvc-4d74144034.json
+>>>>>>> develop
