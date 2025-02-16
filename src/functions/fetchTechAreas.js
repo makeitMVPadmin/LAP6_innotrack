@@ -21,8 +21,22 @@ const db = admin.apps.find((app) => app?.name === "tech-areas-app").firestore();
 
 export default async function fetchTechAreas() {
     try {
+        const techAreaCollectionRef = db.collection("techArea");
+        const snapshot = await techAreaCollectionRef.get();
+
+        if (snapshot.empty) {
+            console.log("No tech areas found");
+            return [];
+        }
+        const techAreas = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+        }));
+        console.log(techAreas);
+        return techAreas;
     } catch (error) {
         console.log("Error fetching tech areas: ", error);
         return [];
     }
 }
+fetchTechAreas();
