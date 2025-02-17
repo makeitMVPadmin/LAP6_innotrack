@@ -6,7 +6,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [content, setContent] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   useEffect(() => {
     const fetchContent = async () => {

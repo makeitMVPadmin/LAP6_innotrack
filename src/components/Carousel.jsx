@@ -6,17 +6,36 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useState, useEffect } from "react";
 
 const CustomCarousel = () => {
-  const { content } = useAppContext();
+  const { content, currentIndex, setCurrentIndex } = useAppContext();
+  const [api, setApi] = useState(null);
+
+  useEffect(() => {
+    if (!api) return;
+
+    // Update the index whenever the slide changes
+    const onSelect = () => {
+      setCurrentIndex(api.selectedScrollSnap() + 1);
+    };
+
+    api.on("select", onSelect);
+
+    onSelect();
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
 
   if (content.length === 0) return <p>Loading...</p>;
 
   return (
-    <Carousel className="w-[100%] max-w-4xl mx-auto">
+    <Carousel className="w-[100%] max-w-4xl mx-auto flex flex-col items-center">
       <CarouselContent>
         {content.map((item) => (
-          <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 p-4">
+          <CarouselItem key={item.id} className="w-full p-4">
             <div className="border rounded-lg shadow-md p-4">
               <img
                 src={item.picture}
@@ -30,8 +49,15 @@ const CustomCarousel = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+
+      {/* Navigation Buttons Below */}
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <CarouselPrevious />
+        <span className="text-lg font-medium">
+          {currentIndex} of {content.length}
+        </span>
+        <CarouselNext />
+      </div>
     </Carousel>
   );
 };
