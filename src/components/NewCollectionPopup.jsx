@@ -12,7 +12,7 @@ export default function NewCollectionPopup() {
                 />
             </CardContent>
             <CardFooter className="pb-4 px-4 flex justify-between">
-                <Button className="bg-yellow-400 hover:bg-yellow-400 text-[#28363F] rounded-lg shadow-[0px_1px_3px_0px_rgba(0,0,0,0.20),_0px_1px_1px_0px_rgba(0,0,0,0.14),_0px_2px_1px_-1px_rgba(0,0,0,0.20)]">
+                <Button className="bg-yellow-400 hover:bg-yellow-400 text-[#28363F] rounded-lg shadow-customButton">
                     Done
                 </Button>
                 <Button className="bg-[#FCFDFD]" variant="ghost">
