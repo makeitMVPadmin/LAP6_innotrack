@@ -12,22 +12,23 @@ const CustomCarousel = () => {
   const { content, currentIndex, setCurrentIndex } = useAppContext();
   const [api, setApi] = useState(null);
 
-  useEffect(() => {
-    if (!api) return;
+  //The Index is NOT updating when you click on the next button**
+  // useEffect(() => {
+  //   if (!api) return;
 
-    // Update the index whenever the slide changes
-    const onSelect = () => {
-      setCurrentIndex(api.selectedScrollSnap() + 1);
-    };
+  //   // Update the index whenever the slide changes
+  //   const onSelect = () => {
+  //     setCurrentIndex(api.selectedScrollSnap() + 1);
+  //   };
 
-    api.on("select", onSelect);
+  //   api.on("select", onSelect);
 
-    onSelect();
+  //   onSelect();
 
-    return () => {
-      api.off("select", onSelect);
-    };
-  }, [api]);
+  //   return () => {
+  //     api.off("select", onSelect);
+  //   };
+  // }, [api]);
 
   if (content.length === 0) return <p>Loading...</p>;
 
@@ -50,10 +51,11 @@ const CustomCarousel = () => {
         ))}
       </CarouselContent>
 
-      {/* Navigation Buttons Below */}
+      {/* Moved Navigation buttons below the CarouselContent */}
       <div className="flex items-center justify-center gap-4 mt-4">
         <CarouselPrevious />
         <span className="text-lg font-medium">
+          {/** The Index is NOT updating when you click on the next button */}
           {currentIndex} of {content.length}
         </span>
         <CarouselNext />
