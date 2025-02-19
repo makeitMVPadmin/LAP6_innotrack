@@ -9,6 +9,7 @@ import TechAreaTab from "./components/TechAreaTab";
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 import NewCollectionPopup from "./components/NewCollectionPopup";
+import Bookmark from "./components/Bookmark";
 
 const hardCodedTechAreas = [
     { id: "all", name: "All" },
@@ -23,6 +24,7 @@ function App() {
 
     return (
         <>
+            <Bookmark />
             <NewCollectionPopup />
             <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
