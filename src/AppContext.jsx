@@ -17,7 +17,6 @@ export const AppProvider = ({ children }) => {
       }));
       setContent(contentData);
     };
-
     fetchContent();
   }, []);
 

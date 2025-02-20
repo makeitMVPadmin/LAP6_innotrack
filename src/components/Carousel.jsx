@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Summary from "./Summary";
 
 const CustomCarousel = () => {
   const { content } = useAppContext();
@@ -27,6 +28,7 @@ const CustomCarousel = () => {
               <p className="text-gray-600">{item.publisher}</p>
               <p className="text-gray-600">{item.summary}</p>
             </div>
+            <Summary content={item.summary}/>
           </CarouselItem>
         ))}
       </CarouselContent>
