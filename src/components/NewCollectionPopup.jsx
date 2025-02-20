@@ -63,17 +63,17 @@ export default function NewCollectionPopup() {
                     </CardContent>
                     <CardFooter className="pb-4 px-4 flex justify-between">
                         <Button
-                            onClick={handleCreateNewCategory}
-                            className="bg-yellow-400 hover:bg-yellow-400 border-black border-r-2 border-b-2 text-[#28363F] rounded-lg shadow-customButton focus:outline-none"
-                        >
-                            Done
-                        </Button>
-                        <Button
                             onClick={handleCancel}
-                            className="bg-[#FCFDFD] border-black border-r-2 border-b-2 focus:outline-none"
+                            className="bg-[#FCFDFD] border-black border-l border-t border-r-2 border-b-2 focus:outline-none"
                             variant="ghost"
                         >
                             Cancel
+                        </Button>
+                        <Button
+                            onClick={handleCreateNewCategory}
+                            className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
+                        >
+                            Done
                         </Button>
                     </CardFooter>
                 </Card>
