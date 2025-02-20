@@ -6,7 +6,7 @@ import {
     CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-//import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Bookmark() {
     return (
@@ -21,6 +21,7 @@ export default function Bookmark() {
                         alt=""
                         className="w-12 h-12 rounded"
                     />
+                    <Checkbox id="" />
                     <label htmlFor="">Item1</label>
                 </div>
             </CardContent>
