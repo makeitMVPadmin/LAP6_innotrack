@@ -9,12 +9,16 @@ module.exports = {
 			montserrat: ["Montserrat", "sans-serif"]
 
 		},
+		content: {
+			listStar: "url('./src/assets/icons/star-filled.svg')"
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			secondayDefault: `#FFD22F`,
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
