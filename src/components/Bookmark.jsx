@@ -15,14 +15,19 @@ export default function Bookmark() {
                 <CardTitle>Add to A Collection</CardTitle>
             </CardHeader>
             <CardContent>
-                <div>
+                <div className="flex items-center">
                     <img
                         src="../assets/placeholder.svg"
                         alt=""
                         className="w-12 h-12 rounded"
                     />
-                    <Checkbox id="" />
-                    <label htmlFor="">Item1</label>
+                    <Checkbox id="123abc" className=" " />
+                    <label
+                        htmlFor="123abc"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                        Item1
+                    </label>
                 </div>
             </CardContent>
             <CardFooter>
