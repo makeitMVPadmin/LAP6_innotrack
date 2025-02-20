@@ -12,11 +12,11 @@ export default function NewCollectionPopup({ onCancel, onCreateCollection }) {
         const regex = /^[ a-zA-Z0-9-_/&+]+$/;
         newCategoryName.trim();
         if (regex.test(newCategoryName)) {
-            let newCategory = {
-                id: Date.now(),
+            let newCategoryInfo = {
                 name: newCategoryName.trim(),
+                createdAt: Date.now(),
             };
-            onCreateCollection(newCategory);
+            onCreateCollection(newCategoryInfo);
             setError(false);
         } else {
             setError(true);
