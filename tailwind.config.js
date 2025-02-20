@@ -13,17 +13,26 @@ module.exports = {
 			listStar: "url('./src/assets/icons/star-filled.svg')"
 		},
 		keyframes: {
-			modalSlide: {
+			modalSlideIn: {
 				"0%": {
 					top: "100%"
 				},
 				"100%": {
 					top: "50%"
 				}
+			},
+			modalSlideOut: {
+				"0%": {
+					top: "50%"
+				},
+				"100%": {
+					top: "100%"
+				}
 			}
 		},
 		animation: {
-			"modalSlide": "modalSlide 0.1s linear"
+			"modalSlideInBottom": "modalSlideIn 0.1s linear",
+			"modalSlideOutBottom": "modalSlideOut 0.1s linear"
 		},
   		borderRadius: {
   			lg: 'var(--radius)',
