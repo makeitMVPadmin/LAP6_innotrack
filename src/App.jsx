@@ -24,7 +24,6 @@ function App() {
     return (
         <>
             <Bookmark />
-            <NewCollectionPopup />
             <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
                     <CustomCarousel />
