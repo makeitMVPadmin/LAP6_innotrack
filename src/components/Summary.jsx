@@ -12,7 +12,7 @@ export default function Summary({content}){
             <DialogTrigger className="bg-transparent border-transparent shadow-none w-auto h-auto p-0">
                 <img src={info} alt="" />
             </DialogTrigger>
-            <DialogContent showOverlay={false} className="pt-[4.375rem] pb-[2.1875rem] px-[1.5rem] max-w-[43.1875rem]">
+            <DialogContent showOverlay={false} disableOpenAnimation={true} className="animate-modalSlide pt-[4.375rem] pb-[2.1875rem] px-[1.5rem] max-w-[43.1875rem]">
                 <DialogHeader>
                     <DialogTitle className="font-fraunces flex gap-2 text-2xl font-semibold mb-1 tracking-normal">Summary <img src={bookmark} alt="" /></DialogTitle>
                     <DialogDescription className="font-montserrat text-xs/4 font-normal text-black">{content}</DialogDescription>
