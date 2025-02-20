@@ -27,6 +27,10 @@ const HARD_CODED_CATEGORIES = [
         createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
     },
 ];
+/*
+FireStore DB
+    ?contentID should be an array of IDs?
+*/
 
 export default function Bookmark() {
     /*
@@ -36,10 +40,35 @@ export default function Bookmark() {
     const [isNewCollectionPopupOpen, setIsNewCollectionPopupOpen] =
         useState(false);
     const [categories, setCategories] = useState(HARD_CODED_CATEGORIES);
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     function handleCategoryToggle(categoryId) {
         /*
+        if contentID is an array content ids
+            if setSelectedCategories.includes(categoryId)
+                then it was already checked so uncheck it now...
+                -remove contentId (prop) from category.contentID..use filter?
+                    -update category collection in db 
+                    -if DB update successful, display confimation method
+            else
+                it was unchecked so check it
+                -add contentId (prop) to category.contentID array
+                    -update category collection in db 
+                    -if DB update successful, display confimation method
+
+
+            update the local state
+                setSelectedCategories
+
+        if contentID is not an array?
          */
+
+        setSelectedCategories((prev) =>
+            prev.includes(categoryId)
+                ? prev.filter((id) => id !== categoryId)
+                : [...prev, categoryId]
+        );
+        console.log(selectedCategories);
     }
 
     function handleCreateNewCollection(newCategoryInfo) {
@@ -65,13 +94,22 @@ export default function Bookmark() {
     }
 
     /*
-    fetch Categories from DB
+    fetch existing Categories from DB when component mounts
         -DB looks different bc of other teams, how to determine which categories to fetch?
-            -maybe fetch all categories in DB
-            -use arrayOfAllContentIds, take only those 
+            -maybe fetch all categories in DB with userId
+            -use arrayOfAllContentIds (from carousel component), take only those 
             categories where arrayOfAllContentIds includes categories.contentId
-                -if final array is empty, that means no content has been bookmarked by this user
+                -if final array is empty, that means no content (from arrayOfAllContentIds) has been bookmarked by this user
+        ..now you have an array of existing categories from DB (or empty array)
         -setCategories with the fetched data
+
+        ...
+        each existing category looks like {id, name, userid, contentid, createdAt}
+        let arrayOfSelectedCategories
+        loop through existing category array
+            if(contentId(prop) inside/=== category.contentID)
+                arrayOfSelectedCategories.push(contentId)
+        -setSelectedCategories(arrayOfSelectedCategories)
 
     */
 
@@ -97,7 +135,9 @@ export default function Bookmark() {
                                 />
                                 <Checkbox
                                     id={`category-${category.id}`}
-                                    checked=""
+                                    checked={selectedCategories.includes(
+                                        category.id
+                                    )}
                                     onCheckedChange={() =>
                                         handleCategoryToggle(category.id)
                                     }
