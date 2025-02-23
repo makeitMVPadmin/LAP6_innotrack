@@ -4,6 +4,7 @@ import "./App.css";
 import AddBookmark from "./components/AddBookmark";
 // import ContentCard from "./components/ContentCard";
 import TechAreaTab from "./components/TechAreaTab";
+import Header from "./components/Header";
 // import ContentList from "./components/ContentList";
 
 import { AppProvider } from "./AppContext";
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <AppProvider>
+      <Header />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <CustomCarousel />
       </div>
