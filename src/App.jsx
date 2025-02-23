@@ -23,9 +23,8 @@ function App() {
 
   return (
     <AppProvider>
+      <Header />
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <Header />
-
         <CustomCarousel />
       </div>
     </AppProvider>
