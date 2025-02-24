@@ -8,10 +8,20 @@ import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 
 function App() {
+  const imageUrl = "./src/assets/bgImage.png";
+
   return (
     <AppProvider>
       <Header />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div
+        className="flex justify-center items-center min-h-screen bg-transparent"
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <CustomCarousel />
       </div>
     </AppProvider>
