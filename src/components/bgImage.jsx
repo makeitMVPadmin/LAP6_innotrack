@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "./Card";
 
 const bgImage = () => {
-  const imageUrl = "./src/assets/bgImage.png";
+  const imageUrl = "./src/assets/BGimage.png";
 
   return (
     <div className="container mx-auto p-4">
