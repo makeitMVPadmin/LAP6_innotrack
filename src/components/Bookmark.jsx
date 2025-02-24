@@ -35,7 +35,7 @@ FireStore DB
 export default function Bookmark() {
     /*
     Bookmark should have a prop contentInfo:
-        {contentId, userId, arrayOfAllContentIds?} = contentInfo
+        {contentId, userId} = contentInfo
     */
     const [isNewCollectionPopupOpen, setIsNewCollectionPopupOpen] =
         useState(false);
@@ -72,11 +72,11 @@ export default function Bookmark() {
     }
 
     function handleCreateNewCollection(newCategoryInfo) {
-        /*
+        /* **Daryl will add a 'bookmark category collection to DB**
         -use contentInfo prop to create newCategory object
             -const {name, createdAt} = newCategoryInfo
             -how to create a catgory Id that matches DB collection ID?
-            -format createdAt date
+            -format createdAt date to look like data in DB
         -what about the icon picture? logic for how to get it?
             -
         -POST To firestore DB
