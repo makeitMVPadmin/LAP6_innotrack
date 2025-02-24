@@ -8,7 +8,7 @@ import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 
 function App() {
-  const imageUrl = "./src/assets/bgImage.png";
+  const imageUrl = "./src/assets/BGimage.png";
 
   return (
     <AppProvider>
