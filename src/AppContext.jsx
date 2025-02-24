@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
-import { collection, getDocs, limit } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 
 const AppContext = createContext();
 
@@ -10,7 +10,9 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchContent = async () => {
-      const querySnapshot = await getDocs(collection(db, "content"), limit(7));
+      const querySnapshot = await getDocs(
+        query(collection(db, "content"), limit(7))
+      );
       const contentData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
