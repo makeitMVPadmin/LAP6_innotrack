@@ -21,8 +21,8 @@ function Header() {
       <div className="flex items-center space-x-4">
         <Menubar className="rounded-[var(--radius)] border-t border-l border-r-2 border-b-2 border-[#28363F] bg-[var(--background)]">
           <MenubarMenu>
+            <MenubarTrigger>Library</MenubarTrigger>
             <MenubarTrigger>Innotrack</MenubarTrigger>
-            <MenubarTrigger>Hot Topics</MenubarTrigger>
             <MenubarTrigger>Home</MenubarTrigger>
           </MenubarMenu>
         </Menubar>
