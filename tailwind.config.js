@@ -6,7 +6,8 @@ module.exports = {
   	extend: {
 		fontFamily: {
 			fraunces: ["Fraunces", "sans-serif"],
-			montserrat: ["Montserrat", "sans-serif"]
+			montserrat: ["Montserrat", "sans-serif"],
+			inter: ["Inter", "sans-serif"]
 
 		},
 		content: {

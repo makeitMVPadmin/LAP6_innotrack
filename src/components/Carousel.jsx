@@ -9,14 +9,17 @@ import {
 import { useEffect, useState } from "react";
 
 const CustomCarousel = () => {
-  const { content, setCurrentIndex } = useAppContext();
+  const { content, currentIndex, setCurrentIndex } = useAppContext();
 
   const [api, setApi] = useState();
+  const [count, setCount] = useState(0);
  
   useEffect(() => {
     if (!api) {
       return
     }
+
+    setCount(api.scrollSnapList().length)
  
     api.on("select", () => {
       setCurrentIndex(api.selectedScrollSnap())
@@ -43,8 +46,11 @@ const CustomCarousel = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <div className="static flex mt-[1.5rem] justify-center gap-11">
+      <CarouselPrevious className="static translate-none"/>
+      <p className="font-fraunces flex gap-6 text-xl"><span className="font-inter font-semibold">{currentIndex + 1}</span> of <span className="font-inter font-semibold">{count}</span></p>
+      <CarouselNext  className="static translate-none"/>
+      </div>
     </Carousel>
   );
 };
