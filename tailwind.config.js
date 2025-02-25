@@ -1,15 +1,46 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: ["class"],
-    content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+		fontFamily: {
+			fraunces: ["Fraunces", "sans-serif"],
+			montserrat: ["Montserrat", "sans-serif"]
+
+		},
+		content: {
+			listStar: "url('./src/assets/icons/star-filled.svg')"
+		},
+		keyframes: {
+			modalSlideIn: {
+				"0%": {
+					top: "100%"
+				},
+				"100%": {
+					top: "50%"
+				}
+			},
+			modalSlideOut: {
+				"0%": {
+					top: "50%"
+				},
+				"100%": {
+					top: "100%"
+				}
+			}
+		},
+		animation: {
+			"modalSlideInBottom": "modalSlideIn 0.1s linear",
+			"modalSlideOutBottom": "modalSlideOut 0.1s linear"
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			secondayDefault: `#FFD22F`,
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -54,4 +85,4 @@ module.exports = {
   	}
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
