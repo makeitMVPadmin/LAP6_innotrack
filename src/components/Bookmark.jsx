@@ -32,7 +32,7 @@ const HARD_CODED_CATEGORIES = [
     },
 ];
 
-export default function Bookmark({ contentInfo }) {
+export default function Bookmark({ contentInfo, onDone }) {
     /*
     Bookmark should have a prop contentInfo:
         {contentId, userId} = contentInfo
@@ -172,7 +172,10 @@ export default function Bookmark({ contentInfo }) {
                     >
                         New Collection
                     </Button>
-                    <Button className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton">
+                    <Button
+                        onClick={onDone}
+                        className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
+                    >
                         Done
                     </Button>
                 </CardFooter>

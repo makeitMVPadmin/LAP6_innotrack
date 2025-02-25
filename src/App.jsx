@@ -9,6 +9,7 @@ import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 import NewCollectionPopup from "./components/NewCollectionPopup";
 import Bookmark from "./components/Bookmark";
+import { Button } from "@/components/ui/button";
 
 const hardCodedTechAreas = [
     { id: "all", name: "All" },
@@ -23,11 +24,19 @@ const mockInfoFromCarousel = {
 };
 
 function App() {
-    const [selectedTabId, setSelectedTabId] = useState("all");
+    const [isBookmarkOpen, setIsBookmarkOpen] = useState(false);
 
     return (
         <>
-            <Bookmark contentInfo={mockInfoFromCarousel} />
+            <Button onClick={() => setIsBookmarkOpen(true)}>
+                Bookmark Icon
+            </Button>
+            {isBookmarkOpen && (
+                <Bookmark
+                    contentInfo={mockInfoFromCarousel}
+                    onDone={() => setIsBookmarkOpen(false)}
+                />
+            )}
             {/* <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
                     <CustomCarousel />
