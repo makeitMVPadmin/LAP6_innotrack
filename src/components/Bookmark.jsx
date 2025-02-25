@@ -38,7 +38,7 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
     Bookmark should have a prop contentInfo:
         {contentId, userId} = contentInfo
     */
-    const [isNewCollectionPopupOpen, setIsNewCollectionPopupOpen] =
+    const [isNewCollectionPopupVisible, setIsNewCollectionPopupVisible] =
         useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -88,7 +88,7 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
         };
         console.log(newCategory);
         setCategories([...categories, newCategory]);
-        setIsNewCollectionPopupOpen(false);
+        setIsNewCollectionPopupVisible(false);
     }
 
     /*
@@ -174,7 +174,7 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
                     </CardContent>
                     <CardFooter className="p-0 justify-between">
                         <Button
-                            onClick={() => setIsNewCollectionPopupOpen(true)}
+                            onClick={() => setIsNewCollectionPopupVisible(true)}
                             className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
                         >
                             New Collection
@@ -189,12 +189,11 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
                 </Card>
             </div>
 
-            {isNewCollectionPopupOpen && (
-                <NewCollectionPopup
-                    onCancel={() => setIsNewCollectionPopupOpen(false)}
-                    onCreateCollection={handleCreateNewCollection}
-                />
-            )}
+            <NewCollectionPopup
+                onCancel={() => setIsNewCollectionPopupVisible(false)}
+                onCreateCollection={handleCreateNewCollection}
+                isNewCollectionPopupVisible={isNewCollectionPopupVisible}
+            />
         </>
     );
 }
