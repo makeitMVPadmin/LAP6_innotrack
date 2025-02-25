@@ -41,11 +41,11 @@ function App() {
                 isVisible={isVisible}
             />
 
-            {/* <AppProvider>
+            <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
                     <CustomCarousel />
                 </div>
-            </AppProvider> */}
+            </AppProvider>
         </>
     );
 }
