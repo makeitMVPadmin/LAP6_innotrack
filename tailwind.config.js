@@ -29,11 +29,23 @@ module.exports = {
 				"100%": {
 					top: "100%"
 				}
+			},
+			fadeInOut: {
+				"0%":{
+					opacity: 1
+				},
+				"50%":{
+					opacity: 0
+				},
+				"100%": {
+					opacity: 1
+				}
 			}
 		},
 		animation: {
 			"modalSlideInBottom": "modalSlideIn 0.1s linear",
-			"modalSlideOutBottom": "modalSlideOut 0.1s linear"
+			"modalSlideOutBottom": "modalSlideOut 0.1s linear",
+			"fadeInOut": "fadeInOut 0.5s linear"
 		},
   		borderRadius: {
   			lg: 'var(--radius)',
