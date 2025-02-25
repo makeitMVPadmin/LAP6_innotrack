@@ -3,8 +3,8 @@ import { useState } from "react";
 import AddBookmark from "./components/AddBookmark";
 // import ContentCard from "./components/ContentCard";
 import TechAreaTab from "./components/TechAreaTab";
+import Header from "./components/Header";
 // import ContentList from "./components/ContentList";
-
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 import NewCollectionPopup from "./components/NewCollectionPopup";
@@ -25,6 +25,7 @@ const mockInfoFromCarousel = {
 
 function App() {
     const [isVisible, setIsVisible] = useState(false);
+    const imageUrl = "./src/assets/BGimage.png";
 
     return (
         <>
@@ -42,7 +43,16 @@ function App() {
             />
 
             <AppProvider>
-                <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                <Header />
+                <div
+                    className="flex justify-center items-center min-h-screen bg-transparent"
+                    style={{
+                        backgroundImage: `url(${imageUrl})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                >
                     <CustomCarousel />
                 </div>
             </AppProvider>
