@@ -24,19 +24,23 @@ const mockInfoFromCarousel = {
 };
 
 function App() {
-    const [isBookmarkOpen, setIsBookmarkOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     return (
         <>
-            <Button onClick={() => setIsBookmarkOpen(true)}>
+            <Button
+                onClick={() => {
+                    setIsVisible(true);
+                }}
+            >
                 Bookmark Icon
             </Button>
-            {isBookmarkOpen && (
-                <Bookmark
-                    contentInfo={mockInfoFromCarousel}
-                    onDone={() => setIsBookmarkOpen(false)}
-                />
-            )}
+            <Bookmark
+                contentInfo={mockInfoFromCarousel}
+                onDone={() => setIsVisible(false)}
+                isVisible={isVisible}
+            />
+
             {/* <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
                     <CustomCarousel />

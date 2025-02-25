@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 import NewCollectionPopup from "./NewCollectionPopup";
+import { cn } from "@/lib/utils";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -32,7 +33,7 @@ const HARD_CODED_CATEGORIES = [
     },
 ];
 
-export default function Bookmark({ contentInfo, onDone }) {
+export default function Bookmark({ contentInfo, onDone, isVisible }) {
     /*
     Bookmark should have a prop contentInfo:
         {contentId, userId} = contentInfo
@@ -127,59 +128,66 @@ export default function Bookmark({ contentInfo, onDone }) {
 
     return (
         <>
-            <Card className="w-[346px] h-[358px] px-6 py-4 border-black border-r-2 border-b-2 flex flex-col">
-                <CardHeader className="p-0 mb-4">
-                    <CardTitle className="text-2xl">
-                        Add to A Collection
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className=" flex-1">
-                    <ScrollArea className="h-[210px] py-2">
-                        {categories.map((category) => (
-                            <div
-                                key={category.id}
-                                className="flex items-center space-x-2 mb-2"
-                            >
-                                <img
-                                    src="../assets/placeholder.svg"
-                                    alt=""
-                                    className="w-12 h-12 rounded mr-2"
-                                />
-                                <Checkbox
-                                    id={`category-${category.id}`}
-                                    checked={selectedCategories.includes(
-                                        category.id
-                                    )}
-                                    onCheckedChange={() =>
-                                        handleCategoryToggle(category.id)
-                                    }
-                                    className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
-                                />
-                                <label
-                                    htmlFor={`category-${category.id}`}
-                                    className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            <div
+                className={cn(
+                    "w-full max-w-md transform transition-all duration-500 ease-in-out",
+                    isVisible ? "translate-x-60" : "-translate-x-full"
+                )}
+            >
+                <Card className="w-[346px] h-[358px] px-6 py-4 border-black border-r-2 border-b-2 flex flex-col">
+                    <CardHeader className="p-0 mb-4">
+                        <CardTitle className="text-2xl">
+                            Add to A Collection
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className=" flex-1">
+                        <ScrollArea className="h-[210px] py-2">
+                            {categories.map((category) => (
+                                <div
+                                    key={category.id}
+                                    className="flex items-center space-x-2 mb-2"
                                 >
-                                    {category.name}
-                                </label>
-                            </div>
-                        ))}
-                    </ScrollArea>
-                </CardContent>
-                <CardFooter className="p-0 justify-between">
-                    <Button
-                        onClick={() => setIsNewCollectionPopupOpen(true)}
-                        className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
-                    >
-                        New Collection
-                    </Button>
-                    <Button
-                        onClick={onDone}
-                        className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
-                    >
-                        Done
-                    </Button>
-                </CardFooter>
-            </Card>
+                                    <img
+                                        src="../assets/placeholder.svg"
+                                        alt=""
+                                        className="w-12 h-12 rounded mr-2"
+                                    />
+                                    <Checkbox
+                                        id={`category-${category.id}`}
+                                        checked={selectedCategories.includes(
+                                            category.id
+                                        )}
+                                        onCheckedChange={() =>
+                                            handleCategoryToggle(category.id)
+                                        }
+                                        className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
+                                    />
+                                    <label
+                                        htmlFor={`category-${category.id}`}
+                                        className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    >
+                                        {category.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </ScrollArea>
+                    </CardContent>
+                    <CardFooter className="p-0 justify-between">
+                        <Button
+                            onClick={() => setIsNewCollectionPopupOpen(true)}
+                            className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
+                        >
+                            New Collection
+                        </Button>
+                        <Button
+                            onClick={onDone}
+                            className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
+                        >
+                            Done
+                        </Button>
+                    </CardFooter>
+                </Card>
+            </div>
 
             {isNewCollectionPopupOpen && (
                 <NewCollectionPopup
