@@ -6,6 +6,7 @@ import Header from "./components/Header";
 // import ContentList from "./components/ContentList";
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
+import Summary from "./components/Summary";
 
 function App() {
   const imageUrl = "./src/assets/BGimage.png";
@@ -13,8 +14,8 @@ function App() {
   return (
     <AppProvider>
       <Header />
-      <div
-        className="flex justify-center items-center min-h-screen bg-transparent"
+      <main
+        className="bg-transparent"
         style={{
           backgroundImage: `url(${imageUrl})`,
           backgroundSize: "cover",
@@ -23,7 +24,8 @@ function App() {
         }}
       >
         <CustomCarousel />
-      </div>
+        <Summary />
+      </main>
     </AppProvider>
   );
 }

@@ -5,6 +5,20 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body{
+    height: 100%;
+}
+
+#root{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex-grow: 1;
+}
+
 @theme {
     --font-fraunces: "Fraunces", sans-serif;
     --font-montserrat: "Montserrat", sans-serif;

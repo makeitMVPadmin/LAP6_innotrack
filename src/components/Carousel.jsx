@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Summary from "./Summary";
+import Summary from "./SummaryDialog";
 
 const CustomCarousel = () => {
   const { content } = useAppContext();
@@ -14,10 +14,10 @@ const CustomCarousel = () => {
   if (content.length === 0) return <p>Loading...</p>;
 
   return (
-    <Carousel className="w-[100%] max-w-4xl mx-auto">
+    <Carousel className="w-[100%] max-w-4xl mx-auto h-fit pt-[2.25rem]">
       <CarouselContent>
         {content.map((item) => (
-          <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 p-4">
+          <CarouselItem key={item.id} className="basis:1/1 p-4">
             <div className="border rounded-lg shadow-md p-4">
               <img
                 src={item.picture}
@@ -28,7 +28,6 @@ const CustomCarousel = () => {
               <p className="text-gray-600">{item.publisher}</p>
               <p className="text-gray-600">{item.summary}</p>
             </div>
-            <Summary content={item.summary}/>
           </CarouselItem>
         ))}
       </CarouselContent>
