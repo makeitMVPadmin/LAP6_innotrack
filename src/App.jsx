@@ -29,21 +29,20 @@ function App() {
 
     return (
         <>
-            <Button
-                onClick={() => {
-                    setIsVisible(true);
-                }}
-            >
-                Bookmark Icon
-            </Button>
-            <Bookmark
-                contentInfo={mockInfoFromCarousel}
-                onDone={() => setIsVisible(false)}
-                isVisible={isVisible}
-            />
-
             <AppProvider>
                 <Header />
+                <Button
+                    onClick={() => {
+                        setIsVisible(true);
+                    }}
+                >
+                    Bookmark Icon
+                </Button>
+                <Bookmark
+                    contentInfo={mockInfoFromCarousel}
+                    onDone={() => setIsVisible(false)}
+                    isVisible={isVisible}
+                />
                 <div
                     className="flex justify-center items-center min-h-screen bg-transparent"
                     style={{
