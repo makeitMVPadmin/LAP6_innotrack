@@ -17,18 +17,22 @@ const hardCodedTechAreas = [
     { id: "webdev", name: "Web Development" },
     { id: "datasc", name: "Data Science" },
 ];
+const mockInfoFromCarousel = {
+    currContentId: "magPC2025asusROG",
+    userId: "dNC63cyuDbEoEntxBpe9",
+};
 
 function App() {
     const [selectedTabId, setSelectedTabId] = useState("all");
 
     return (
         <>
-            <Bookmark />
-            <AppProvider>
+            <Bookmark contentInfo={mockInfoFromCarousel} />
+            {/* <AppProvider>
                 <div className="flex justify-center items-center min-h-screen bg-gray-100">
                     <CustomCarousel />
                 </div>
-            </AppProvider>
+            </AppProvider> */}
         </>
     );
 }

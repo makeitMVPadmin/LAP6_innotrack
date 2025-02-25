@@ -9,7 +9,7 @@ export default function NewCollectionPopup({ onCancel, onCreateCollection }) {
     const [error, setError] = useState(false);
 
     function handleCreateNewCategory() {
-        const regex = /^[ a-zA-Z0-9-_/&+]+$/;
+        const regex = /^[a-zA-Z0-9-_/&+]+$/;
         newCategoryName.trim();
         if (regex.test(newCategoryName)) {
             let newCategoryInfo = {

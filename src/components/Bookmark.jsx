@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewCollectionPopup from "./NewCollectionPopup";
 
 const HARD_CODED_CATEGORIES = [
@@ -16,31 +16,32 @@ const HARD_CODED_CATEGORIES = [
         id: "ro7Sz05bCKdfzFaYUOx7",
         name: "network",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: "HIM6R8AbiEKBZWhkIy8Y",
+        contentID: [
+            "HIM6R8AbiEKBZWhkIy8Y",
+            "j9Tq3xCdLp7mRv1sFg0H",
+            "magPC2025asusROG",
+        ],
         createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
     },
     {
         id: "lRqX0IFdr6u1gQXRBGa1",
         name: "drive",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: "afYzXislW1iopWhNyQF3",
+        contentID: ["afYzXislW1iopWhNyQF3"],
         createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
     },
 ];
-/*
-FireStore DB
-    ?contentID should be an array of IDs?
-*/
 
-export default function Bookmark() {
+export default function Bookmark({ contentInfo }) {
     /*
     Bookmark should have a prop contentInfo:
         {contentId, userId} = contentInfo
     */
     const [isNewCollectionPopupOpen, setIsNewCollectionPopupOpen] =
         useState(false);
-    const [categories, setCategories] = useState(HARD_CODED_CATEGORIES);
+    const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    let { currContentId, userId } = contentInfo;
 
     function handleCategoryToggle(categoryId) {
         /*
@@ -56,11 +57,6 @@ export default function Bookmark() {
                     -update category collection in db 
                     -if DB update successful, display confimation method
 
-
-            update the local state
-                setSelectedCategories
-
-        if contentID is not an array?
          */
 
         setSelectedCategories((prev) =>
@@ -68,7 +64,8 @@ export default function Bookmark() {
                 ? prev.filter((id) => id !== categoryId)
                 : [...prev, categoryId]
         );
-        console.log(selectedCategories);
+        console.log("inside HANDLE TOGGLE");
+        console.log("Current Selected Category array: ", selectedCategories);
     }
 
     function handleCreateNewCollection(newCategoryInfo) {
@@ -84,8 +81,8 @@ export default function Bookmark() {
          */
         let newCategory = {
             id: Date.now(),
-            userID: "dNC63cyuDbEoEntxBpe9",
-            contentID: "afYzXislW1iopWhNyQF3",
+            userID: userId,
+            contentID: currContentId,
             ...newCategoryInfo,
         };
         console.log(newCategory);
@@ -95,16 +92,9 @@ export default function Bookmark() {
 
     /*
     fetch existing Categories from DB when component mounts
-        -DB looks different bc of other teams, how to determine which categories to fetch?
-            -maybe fetch all categories in DB with userId
-            -use arrayOfAllContentIds (from carousel component), take only those 
-            categories where arrayOfAllContentIds includes categories.contentId
-                -if final array is empty, that means no content (from arrayOfAllContentIds) has been bookmarked by this user
-        ..now you have an array of existing categories from DB (or empty array)
         -setCategories with the fetched data
-
         ...
-        each existing category looks like {id, name, userid, contentid, createdAt}
+        each existing category looks like {id, name, userid, contentid[], createdAt}
         let arrayOfSelectedCategories
         loop through existing category array
             if(contentId(prop) inside/=== category.contentID)
@@ -112,6 +102,28 @@ export default function Bookmark() {
         -setSelectedCategories(arrayOfSelectedCategories)
 
     */
+    useEffect(() => {
+        console.log("inside useEffect");
+
+        /**Add code here to fetch Categories from DB by doing:
+         * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
+         *
+         * result from the function should give back an array
+         */
+        setCategories(HARD_CODED_CATEGORIES);
+        console.log("Initial Categories: ", categories);
+        //set selected categories
+        for (let cat of categories) {
+            if (cat.contentID.includes(currContentId)) {
+                console.log(
+                    cat.name,
+                    " has the current content in it's contentID array!"
+                );
+                setSelectedCategories([...selectedCategories, cat.id]);
+            }
+        }
+        console.log("Initial Selected Category array: ", selectedCategories);
+    }, []);
 
     return (
         <>
