@@ -12,9 +12,9 @@ import {
 
 function Header() {
   return (
-    <header>
+    <header className="flex items-center justify-between px-6 py-3 bg-white shadow-md">
       <img src={Logo} alt="Logo" className="w-logo-width h-logo-auto" />
-      <div>
+      <div className="flex items-center space-x-4">
         <Menubar>
           <MenubarMenu>
             <MenubarTrigger>Innotrack</MenubarTrigger>
