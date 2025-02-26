@@ -37,18 +37,25 @@ const CustomCarousel = () => {
     <Carousel className="w-[100%] max-w-4xl mx-auto flex flex-col items-center">
       <CarouselContent>
         {content.map((item) => (
-          <CarouselItem key={item.id} className="w-full p-4">
-            <div className="border rounded-lg shadow-md p-4">
+          <CarouselItem
+            key={item.id}
+            className="rounded-[7.869px] 
+  border-t-[0.997px] border-r-[1.994px] border-b-[1.994px] border-l-[0.997px] border-[#182127]
+  shadow-[0px_0.997px_1.994px_0px_rgba(0,0,0,0.05)]"
+          >
+            <div>
               <img
                 src={item.picture}
                 alt={item.title}
-                className="w-full h-48 object-cover rounded-md mt-2"
+                className="w-full object-cover rounded-md"
               />
-              <h1 className="text-xl font-semibold">{item.title}</h1>
-              <p className="text-gray-600">{item.publisher}</p>
-              <p className="text-gray-600">{item.summary}</p>
+              <div className="bg-[#EBF1F6]">
+                <h1 className="text-xl font-semibold">{item.title}</h1>
+                <p className="text-gray-600">{item.publisher}</p>
+                <p className="text-gray-600">{item.summary}</p>
+              </div>
             </div>
-            <Summary content={item.summary} />
+            {/* <Summary content={item.summary} /> */}
           </CarouselItem>
         ))}
       </CarouselContent>
