@@ -1,15 +1,11 @@
 import { useState } from "react";
-import AddBookmark from "./components/AddBookmark";
-// import ContentCard from "./components/ContentCard";
-import TechAreaTab from "./components/TechAreaTab";
 import Header from "./components/Header";
-// import ContentList from "./components/ContentList";
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
 import Summary from "./components/Summary";
 
 function App() {
-  const imageUrl = "./src/assets/BGimage.png";
+  const imageUrl = "./src/assets/BackgroundImage.png";
 
   return (
     <AppProvider>

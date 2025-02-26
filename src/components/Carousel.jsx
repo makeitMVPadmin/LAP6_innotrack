@@ -1,12 +1,13 @@
 import { useAppContext } from "../AppContext";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
+import Bookmark from "./Bookmark";
 
 const CustomCarousel = () => {
   const { content, currentIndex, setCurrentIndex } = useAppContext();
@@ -26,7 +27,7 @@ const CustomCarousel = () => {
     })
   }, [api])
 
-  if (content.length === 0) return <p>Loading...</p>;
+    if (content.length === 0) return <p>Loading...</p>;
 
   return (
     <Carousel setApi={setApi} className="w-[100%] max-w-4xl mx-auto h-fit pt-[2.25rem]">
@@ -43,6 +44,7 @@ const CustomCarousel = () => {
               <p className="text-gray-600">{item.publisher}</p>
               <p className="text-gray-600">{item.summary}</p>
             </div>
+            <Bookmark contentInfo={item.id} />
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -53,6 +55,7 @@ const CustomCarousel = () => {
       </div>
     </Carousel>
   );
+
 };
 
 export default CustomCarousel;
