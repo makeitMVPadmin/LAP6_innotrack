@@ -43,7 +43,7 @@ const CustomCarousel = () => {
                 alt={item.title}
                 className="w-full aspect-[56/25] object-cover rounded-t-[7.869px]"
               />
-              <div className="p-2  bg-[#EBF1F6]">
+              <div className="p-2 bg-[#EBF1F6] min-h-[9rem]">
                 <div className="flex justify-between">
                   <h1 className="text-xl font-semibold">{item.title}</h1>
                   <Bookmark contentInfo={item.id} />
