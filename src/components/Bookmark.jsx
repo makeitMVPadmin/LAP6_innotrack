@@ -42,16 +42,16 @@ const HARD_CODED_CATEGORIES = [
     },
 ];
 
-export default function Bookmark({ contentInfo }) {
+export default function Bookmark({ contentId }) {
     /*
     Bookmark should have a prop contentInfo:
-        {contentId, userId} = contentInfo
+        {contentId, userId?} = contentInfo
     */
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    let { currContentId, userId } = contentInfo;
+    // let { currContentId } = contentInfo;
 
     function handleCategoryToggle(categoryId) {
         /*
@@ -86,13 +86,14 @@ export default function Bookmark({ contentInfo }) {
             -format createdAt date to look like data in DB
         -what about the icon picture? logic for how to get it?
             -
+        -where to get userID????
         -POST To firestore DB
         -setCategories with newly created category
          */
         let newCategory = {
             id: Date.now(),
-            userID: userId,
-            contentID: currContentId,
+            userID: "dNC63cyuDbEoEntxBpe9",
+            contentID: contentId,
             ...newCategoryInfo,
         };
         console.log(newCategory);
@@ -139,7 +140,7 @@ export default function Bookmark({ contentInfo }) {
         console.log("Initial Categories: ", categories);
         //set selected categories
         for (let cat of categories) {
-            if (cat.contentID.includes(currContentId)) {
+            if (cat.contentID.includes(contentId)) {
                 console.log(
                     cat.name,
                     " has the current content in it's contentID array!"

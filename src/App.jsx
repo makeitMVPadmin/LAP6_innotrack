@@ -7,9 +7,6 @@ import Header from "./components/Header";
 // import ContentList from "./components/ContentList";
 import { AppProvider } from "./AppContext";
 import CustomCarousel from "./components/Carousel";
-import NewCollectionPopup from "./components/NewCollectionPopup";
-import Bookmark from "./components/Bookmark";
-import { Button } from "@/components/ui/button";
 
 const hardCodedTechAreas = [
     { id: "all", name: "All" },
@@ -30,7 +27,7 @@ function App() {
         <>
             <AppProvider>
                 <Header />
-                <Bookmark contentInfo={mockInfoFromCarousel} />
+                {/* <Bookmark contentInfo={mockInfoFromCarousel} /> */}
                 <div
                     className="flex justify-center items-center min-h-screen bg-transparent"
                     style={{
