@@ -48,17 +48,18 @@ export default function Bookmark({ contentId }) {
 
     function handleCategoryToggle(categoryId) {
         /*
-        if contentID is an array content ids
-            if setSelectedCategories.includes(categoryId)
-                then it was already checked so uncheck it now...
-                -remove contentId (prop) from category.contentID..use filter?
-                    -update category collection in db 
-                    -if DB update successful, display confimation method
-            else
-                it was unchecked so check it
-                -add contentId (prop) to category.contentID array
-                    -update category collection in db 
-                    -if DB update successful, display confimation method
+        if selectedCategories.includes(categoryId)
+            then it was already checked so uncheck it now...
+            -remove contentId from category.contentID...use array filter 
+            -UPDATE category collection in DB using categoryId
+            -if DB update successful, display confimation message
+                -else display error message
+        else
+            it was unchecked so check it
+            -add contentId to category.contentID array
+            -update category collection in db 
+            -if DB update successful, display confimation method
+                -else display error message
 
          */
 
@@ -72,16 +73,19 @@ export default function Bookmark({ contentId }) {
     }
 
     function handleCreateNewCollection(newCategoryInfo) {
-        /* **Daryl will add a 'bookmark category collection to DB**
-        -use contentInfo prop to create newCategory object
+        /*
+        -use contentId prop to create newCategory object
             -const {name, createdAt} = newCategoryInfo
-            -how to create a catgory Id that matches DB collection ID?
-            -format createdAt date to look like data in DB
+            -create a random category Id that look like ids in DB
+            -format createdAt date to look like data in DB**
+            -where to get userID????
+
         -what about the icon picture? logic for how to get it?
-            -
-        -where to get userID????
+        
+        -setCategories
+        -display confirmation message (inside NewCollectionPopup dialog, before removing visiability)
         -POST To firestore DB
-        -setCategories with newly created category
+        
          */
         let newCategory = {
             id: Date.now(),
@@ -130,10 +134,10 @@ export default function Bookmark({ contentId }) {
          * result from the function should give back an array
          */
         setCategories(HARD_CODED_CATEGORIES);
-        console.log("Initial Categories: ", categories);
         //set selected categories
         for (let cat of categories) {
-            if (cat.contentID.includes(contentId)) {
+            //contentId
+            if (cat.contentID.includes("magPC2025asusROG")) {
                 console.log(
                     cat.name,
                     " has the current content in it's contentID array!"
@@ -141,8 +145,9 @@ export default function Bookmark({ contentId }) {
                 setSelectedCategories([...selectedCategories, cat.id]);
             }
         }
-        console.log("Initial Selected Category array: ", selectedCategories);
     }, []);
+    // console.log("Initial Categories: ", categories);
+    // console.log("Initial Selected Category array: ", selectedCategories);
 
     return (
         <>
