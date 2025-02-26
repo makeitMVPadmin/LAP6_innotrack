@@ -6,21 +6,40 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import Summary from "./Summary";
+import { useEffect, useState } from "react";
 import Bookmark from "./Bookmark";
 
 const CustomCarousel = () => {
-    const { content } = useAppContext();
+    const { content, currentIndex, setCurrentIndex } = useAppContext();
+
+    const [api, setApi] = useState();
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+
+        setCount(api.scrollSnapList().length);
+
+        api.on("select", () => {
+            setCurrentIndex(api.selectedScrollSnap());
+        });
+    }, [api]);
 
     if (content.length === 0) return <p>Loading...</p>;
 
     return (
-        <Carousel className="w-[100%] max-w-4xl mx-auto">
+        <Carousel
+            setApi={setApi}
+            className="w-[100%] max-w-4xl mx-auto h-fit pt-[2.25rem]"
+        >
             <CarouselContent>
-                {content.map((item) => (
+                {content.map((item, index) => (
                     <CarouselItem
                         key={item.id}
-                        className="md:basis-1/2 lg:basis-1/3 p-4"
+                        index={index}
+                        className="basis:1/1 p-4"
                     >
                         <div className="border rounded-lg shadow-md p-4">
                             <img
@@ -28,19 +47,28 @@ const CustomCarousel = () => {
                                 alt={item.title}
                                 className="w-full h-48 object-cover rounded-md mt-2"
                             />
-                            <h1 className="text-xl font-semibold">
-                                {item.title}
-                            </h1>
+                            <div className="flex justify-between">
+                                <h1 className="text-xl font-semibold">
+                                    {item.title}
+                                </h1>
+                                <Bookmark contentInfo={item.id} />
+                            </div>
                             <p className="text-gray-600">{item.publisher}</p>
                             <p className="text-gray-600">{item.summary}</p>
                         </div>
-                        <Summary content={item.summary} />
-                        <Bookmark contentInfo={item.id} />
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <div className="static flex mt-[1.5rem] justify-center gap-11">
+                <CarouselPrevious className="static translate-none" />
+                <p className="font-fraunces flex gap-6 text-xl">
+                    <span className="font-inter font-semibold">
+                        {currentIndex + 1}
+                    </span>{" "}
+                    of <span className="font-inter font-semibold">{count}</span>
+                </p>
+                <CarouselNext className="static translate-none" />
+            </div>
         </Carousel>
     );
 };
