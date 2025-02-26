@@ -11,6 +11,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 import NewCollectionPopup from "./NewCollectionPopup";
 import { cn } from "@/lib/utils";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import bookmarkIcon from "../assets/icons/bookmark.svg";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -33,13 +42,13 @@ const HARD_CODED_CATEGORIES = [
     },
 ];
 
-export default function Bookmark({ contentInfo, onDone, isVisible }) {
+export default function Bookmark({ contentInfo }) {
     /*
     Bookmark should have a prop contentInfo:
         {contentId, userId} = contentInfo
     */
-    const [isNewCollectionPopupVisible, setIsNewCollectionPopupVisible] =
-        useState(false);
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     let { currContentId, userId } = contentInfo;
@@ -88,8 +97,23 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
         };
         console.log(newCategory);
         setCategories([...categories, newCategory]);
-        setIsNewCollectionPopupVisible(false);
     }
+
+    function handleCloseDialog() {
+        setIsDialogVisible(false);
+        setTimeout(() => {
+            setIsDialogOpen(false);
+        }, 300);
+    }
+
+    useEffect(() => {
+        if (isDialogOpen) {
+            const timer = setTimeout(() => {
+                setIsDialogVisible(true);
+            }, 50);
+            return () => clearTimeout(timer);
+        }
+    }, [isDialogOpen]);
 
     /*
     fetch existing Categories from DB when component mounts
@@ -128,72 +152,83 @@ export default function Bookmark({ contentInfo, onDone, isVisible }) {
 
     return (
         <>
-            <div
-                className={cn(
-                    "w-full max-w-md transform transition-all duration-500 ease-in-out",
-                    isVisible ? "translate-x-60" : "-translate-x-full"
-                )}
+            <Dialog
+                open={isDialogOpen}
+                onOpenChange={(open) => {
+                    if (open) {
+                        setIsDialogOpen(true);
+                    }
+                }}
             >
-                <Card className="w-[346px] h-[358px] px-6 py-4 border-black border-r-2 border-b-2 flex flex-col">
-                    <CardHeader className="p-0 mb-4">
-                        <CardTitle className="text-2xl">
-                            Add to A Collection
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className=" flex-1">
-                        <ScrollArea className="h-[210px] py-2">
-                            {categories.map((category) => (
-                                <div
-                                    key={category.id}
-                                    className="flex items-center space-x-2 mb-2"
+                <DialogTrigger asChild>
+                    <img src={bookmarkIcon} alt="Bookmark Icon" />
+                </DialogTrigger>
+                <DialogContent className="p-0 bg-transparent border-none shadow-none">
+                    <div
+                        className={cn(
+                            "transform transition-all duration-300 ease-in-out",
+                            isDialogVisible
+                                ? "-translate-x-[600px]"
+                                : "-translate-x-[1500px]"
+                        )}
+                    >
+                        <div className="w-[346px] h-[358px] px-6 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
+                            <DialogHeader className="p-0 mb-4">
+                                <DialogTitle className="text-2xl">
+                                    Add to A Collection
+                                </DialogTitle>
+                            </DialogHeader>
+                            <div className="flex-1">
+                                <ScrollArea className="h-[210px] py-2">
+                                    {categories.map((category) => (
+                                        <div
+                                            key={category.id}
+                                            className="flex items-center space-x-2 mb-2"
+                                        >
+                                            <img
+                                                src="../assets/placeholder.svg"
+                                                alt=""
+                                                className="w-12 h-12 rounded mr-2"
+                                            />
+                                            <Checkbox
+                                                id={`category-${category.id}`}
+                                                checked={selectedCategories.includes(
+                                                    category.id
+                                                )}
+                                                onCheckedChange={() =>
+                                                    handleCategoryToggle(
+                                                        category.id
+                                                    )
+                                                }
+                                                className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
+                                            />
+                                            <label
+                                                htmlFor={`category-${category.id}`}
+                                                className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                            >
+                                                {category.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </ScrollArea>
+                            </div>
+                            <DialogFooter className="p-0 sm:justify-between">
+                                <NewCollectionPopup
+                                    onCreateCollection={
+                                        handleCreateNewCollection
+                                    }
+                                />
+                                <Button
+                                    onClick={handleCloseDialog}
+                                    className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
                                 >
-                                    <img
-                                        src="../assets/placeholder.svg"
-                                        alt=""
-                                        className="w-12 h-12 rounded mr-2"
-                                    />
-                                    <Checkbox
-                                        id={`category-${category.id}`}
-                                        checked={selectedCategories.includes(
-                                            category.id
-                                        )}
-                                        onCheckedChange={() =>
-                                            handleCategoryToggle(category.id)
-                                        }
-                                        className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
-                                    />
-                                    <label
-                                        htmlFor={`category-${category.id}`}
-                                        className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                    >
-                                        {category.name}
-                                    </label>
-                                </div>
-                            ))}
-                        </ScrollArea>
-                    </CardContent>
-                    <CardFooter className="p-0 justify-between">
-                        <Button
-                            onClick={() => setIsNewCollectionPopupVisible(true)}
-                            className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
-                        >
-                            New Collection
-                        </Button>
-                        <Button
-                            onClick={onDone}
-                            className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
-                        >
-                            Done
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
-
-            <NewCollectionPopup
-                onCancel={() => setIsNewCollectionPopupVisible(false)}
-                onCreateCollection={handleCreateNewCollection}
-                isNewCollectionPopupVisible={isNewCollectionPopupVisible}
-            />
+                                    Done
+                                </Button>
+                            </DialogFooter>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
