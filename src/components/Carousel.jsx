@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import Bookmark from "./Bookmark";
+import { Button } from "@/components/ui/button";
 
 const CustomCarousel = () => {
     const { content, currentIndex, setCurrentIndex } = useAppContext();
@@ -32,7 +33,7 @@ const CustomCarousel = () => {
     return (
         <Carousel
             setApi={setApi}
-            className="w-[100%] max-w-4xl mx-auto h-fit pt-[2.25rem]"
+            className="w-[100%] max-w-3xl mx-auto h-fit pt-[2.25rem]"
         >
             <CarouselContent>
                 {content.map((item, index) => (
@@ -41,25 +42,37 @@ const CustomCarousel = () => {
                         index={index}
                         className="basis:1/1 p-4"
                     >
-                        <div className="border rounded-lg shadow-md p-4">
+                        <div className="rounded-[7.869px] border-t-[0.997px] border-r-[1.994px] border-b-[1.994px] border-l-[0.997px] border-[#182127] shadow-[0px_0.997px_1.994px_0px_rgba(0,0,0,0.05) bg-white overflow-hidden ">
                             <img
                                 src={item.picture}
                                 alt={item.title}
-                                className="w-full h-48 object-cover rounded-md mt-2"
+                                className="w-full aspect-[56/25] object-cover rounded-t-[7.869px]"
                             />
-                            <div className="flex justify-between">
-                                <h1 className="text-xl font-semibold">
-                                    {item.title}
-                                </h1>
-                                <Bookmark contentId={item.id} />
+                            <div className="p-2 pt-4 bg-[#EBF1F6] min-h-[9rem]">
+                                <div className="flex justify-between">
+                                    <h1 className="text-xl sm:text-3xl  font-semibold line-clamp-2">
+                                        {item.title}
+                                    </h1>
+                                    {/* <Bookmark contentInfo={item.id} /> */}
+                                </div>
+
+                                <p className="text-base sm:text-lg pt-2 pb-1">
+                                    {item.publisher}
+                                </p>
+
+                                {/* <Button
+                    className="absolute bottom-[-0.625rem] right-1 text-[#28363F] bg-yellow-400 
+    hover:bg-yellow-500 border-black border-l border-t border-r-2 
+    border-b-2 rounded-lg shadow-customButton transition"
+                  >
+                    Read More
+                  </Button> */}
                             </div>
-                            <p className="text-gray-600">{item.publisher}</p>
-                            <p className="text-gray-600">{item.summary}</p>
                         </div>
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <div className="static flex mt-[1.5rem] justify-center gap-11">
+            <div className="static flex mt-[1rem] justify-center gap-11">
                 <CarouselPrevious className="static translate-none" />
                 <p className="font-fraunces flex gap-6 text-xl">
                     <span className="font-inter font-semibold">
