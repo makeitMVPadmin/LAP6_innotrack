@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import Bookmark from "./Bookmark";
+import { Button } from "@/components/ui/button";
 
 const CustomCarousel = () => {
   const { content, currentIndex, setCurrentIndex } = useAppContext();
@@ -32,7 +33,7 @@ const CustomCarousel = () => {
   return (
     <Carousel
       setApi={setApi}
-      className="w-[100%] max-w-2xl mx-auto h-fit pt-[2.25rem]"
+      className="w-[100%] max-w-3xl mx-auto h-fit pt-[2.25rem]"
     >
       <CarouselContent>
         {content.map((item, index) => (
@@ -49,13 +50,13 @@ const CustomCarousel = () => {
                   <Bookmark contentInfo={item.id} />
                 </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-[2rem]">
                   <div>
                     <p className="text-sm sm:text-base">{item.publisher}</p>
                   </div>
-                  <button className="mt-2 sm:mt-4 bg-yellow-400 text-black font-medium px-4 py-2 rounded-md shadow-md hover:bg-yellow-500 transition">
+                  <Button className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton hover:bg-yellow-500 transition">
                     Read More
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
