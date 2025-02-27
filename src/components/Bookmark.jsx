@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import NewCollectionPopup from "./NewCollectionPopup";
 import { cn } from "@/lib/utils";
 import {
-    Dialog,
-    DialogTrigger,
-    DialogContent,
+    CustomDialog as Dialog,
+    CustomDialogTrigger as DialogTrigger,
+    CustomDialogContent as DialogContent,
+} from "@/components/ui/custom-dialog";
+import {
     DialogHeader,
     DialogTitle,
     DialogFooter,

@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
-    Dialog,
-    DialogTrigger,
-    DialogContent,
-    DialogFooter,
-} from "@/components/ui/dialog";
+    CustomDialog as Dialog,
+    CustomDialogTrigger as DialogTrigger,
+    CustomDialogContent as DialogContent,
+} from "@/components/ui/custom-dialog";
+import { DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
