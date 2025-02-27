@@ -22,7 +22,7 @@ const HARD_CODED_CATEGORIES = [
         contentID: [
             "HIM6R8AbiEKBZWhkIy8Y",
             "j9Tq3xCdLp7mRv1sFg0H",
-            "magPC2025asusROG",
+            "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
         ],
         createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
     },
@@ -30,12 +30,16 @@ const HARD_CODED_CATEGORIES = [
         id: "lRqX0IFdr6u1gQXRBGa1",
         name: "drive",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: ["afYzXislW1iopWhNyQF3"],
+        contentID: [
+            "afYzXislW1iopWhNyQF3",
+            "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
+        ],
         createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
     },
 ];
 
 export default function Bookmark({ contentId }) {
+    console.log(`content Id being looked at: ${contentId}`);
     /*
     Bookmark should have a prop contentInfo:
         {contentId, userId?} = contentInfo
@@ -44,9 +48,8 @@ export default function Bookmark({ contentId }) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    // let { currContentId } = contentInfo;
 
-    function handleCategoryToggle(categoryId) {
+    function handleCategoryToggle(categoryIndex) {
         /*
         if selectedCategories.includes(categoryId)
             then it was already checked so uncheck it now...
@@ -62,14 +65,19 @@ export default function Bookmark({ contentId }) {
                 -else display error message
 
          */
-
-        setSelectedCategories((prev) =>
-            prev.includes(categoryId)
-                ? prev.filter((id) => id !== categoryId)
-                : [...prev, categoryId]
+        const newCategories = [...categories];
+        const indexOfID = newCategories[categoryIndex].contentID.findIndex(
+            (id) => id === contentId
         );
-        console.log("inside HANDLE TOGGLE");
-        console.log("Current Selected Category array: ", selectedCategories);
+        indexOfID !== -1
+            ? newCategories[categoryIndex].contentID.splice(indexOfID, 1)
+            : newCategories[categoryIndex].contentID.push(contentId);
+
+        setCategories(newCategories);
+    }
+
+    for (let cat of categories) {
+        console.log(`${cat.name} --content ids: ${cat.contentID}`);
     }
 
     function handleCreateNewCollection(newCategoryInfo) {
@@ -90,7 +98,7 @@ export default function Bookmark({ contentId }) {
         let newCategory = {
             id: Date.now(),
             userID: "dNC63cyuDbEoEntxBpe9",
-            contentID: contentId,
+            contentID: [],
             ...newCategoryInfo,
         };
         console.log(newCategory);
@@ -113,41 +121,15 @@ export default function Bookmark({ contentId }) {
         }
     }, [isDialogOpen]);
 
-    /*
-    fetch existing Categories from DB when component mounts
-        -setCategories with the fetched data
-        ...
-        each existing category looks like {id, name, userid, contentid[], createdAt}
-        let arrayOfSelectedCategories
-        loop through existing category array
-            if(contentId(prop) inside/=== category.contentID)
-                arrayOfSelectedCategories.push(contentId)
-        -setSelectedCategories(arrayOfSelectedCategories)
-
-    */
     useEffect(() => {
         console.log("inside useEffect");
-
         /**Add code here to fetch Categories from DB by doing:
          * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
          *
          * result from the function should give back an array
          */
         setCategories(HARD_CODED_CATEGORIES);
-        //set selected categories
-        for (let cat of categories) {
-            //contentId
-            if (cat.contentID.includes("magPC2025asusROG")) {
-                console.log(
-                    cat.name,
-                    " has the current content in it's contentID array!"
-                );
-                setSelectedCategories([...selectedCategories, cat.id]);
-            }
-        }
     }, []);
-    // console.log("Initial Categories: ", categories);
-    // console.log("Initial Selected Category array: ", selectedCategories);
 
     return (
         <>
@@ -179,7 +161,7 @@ export default function Bookmark({ contentId }) {
                             </DialogHeader>
                             <div className="flex-1">
                                 <ScrollArea className="h-[210px] py-2">
-                                    {categories.map((category) => (
+                                    {categories.map((category, index) => (
                                         <div
                                             key={category.id}
                                             className="flex items-center space-x-2 mb-2"
@@ -191,13 +173,14 @@ export default function Bookmark({ contentId }) {
                                             />
                                             <Checkbox
                                                 id={`category-${category.id}`}
-                                                checked={selectedCategories.includes(
-                                                    category.id
+                                                // checked={selectedCategories.includes(
+                                                //     category.id
+                                                // )}
+                                                checked={category.contentID.includes(
+                                                    contentId
                                                 )}
                                                 onCheckedChange={() =>
-                                                    handleCategoryToggle(
-                                                        category.id
-                                                    )
+                                                    handleCategoryToggle(index)
                                                 }
                                                 className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
                                             />

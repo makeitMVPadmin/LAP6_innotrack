@@ -51,7 +51,7 @@ const CustomCarousel = () => {
                                 <h1 className="text-xl font-semibold">
                                     {item.title}
                                 </h1>
-                                <Bookmark contentInfo={item.id} />
+                                <Bookmark contentId={item.id} />
                             </div>
                             <p className="text-gray-600">{item.publisher}</p>
                             <p className="text-gray-600">{item.summary}</p>
