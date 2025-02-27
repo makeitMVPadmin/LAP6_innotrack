@@ -109,6 +109,7 @@ export default function Bookmark({ contentInfo }) {
                                     onCreateCollection={
                                         handleCreateNewCollection
                                     }
+                                    bookmarks={categories}
                                 />
                                 <Button
                                     onClick={handleCloseDialog}

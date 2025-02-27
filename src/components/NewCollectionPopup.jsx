@@ -8,8 +8,9 @@ import {
     DialogContent,
     DialogFooter,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
 
-export default function NewCollectionPopup({ onCreateCollection }) {
+export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
     const [newCategoryName, setNewCategoryName] = useState("");
     const [error, setError] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -17,25 +18,37 @@ export default function NewCollectionPopup({ onCreateCollection }) {
 
     function handleCreateNewCategory() {
         const regex = /^[a-zA-Z0-9-_/&+]+$/;
-        newCategoryName.trim();
-        if (regex.test(newCategoryName)) {
+        const trimmedCategoryName = newCategoryName.trim();
+        const duplicate = (bookmark) => bookmark.name === trimmedCategoryName;
+
+        if (
+            regex.test(trimmedCategoryName) &&
+            bookmarks.some(duplicate) === false
+        ) {
+            toast.success("Valid Collection Name", {
+                duration: 1600,
+                position: "top-left",
+            });
+
             let newCategoryInfo = {
-                name: newCategoryName.trim(),
+                name: trimmedCategoryName,
                 createdAt: Date.now(),
             };
             onCreateCollection(newCategoryInfo);
             setError(false);
+            setNewCategoryName("");
+            setIsPopupVisible(false);
+            setTimeout(() => setIsPopupOpen(false), 1500);
         } else {
             setError(true);
         }
-        setNewCategoryName("");
-        setIsPopupVisible(false);
-        setTimeout(setIsPopupOpen(false), 300);
     }
 
     function handleClosePopup() {
+        setNewCategoryName("");
+        setError(false);
         setIsPopupVisible(false);
-        setTimeout(setIsPopupOpen(false), 300);
+        setTimeout(() => setIsPopupOpen(false), 300);
     }
 
     useEffect(() => {
@@ -62,7 +75,10 @@ export default function NewCollectionPopup({ onCreateCollection }) {
                         New Collection
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="p-0 bg-transparent border-none shadow-none top-[75%]">
+                <DialogContent
+                    OnInteractOutside={(e) => e.preventDefault()}
+                    className="p-0 bg-transparent border-none shadow-none top-[75%]"
+                >
                     <div
                         className={cn(
                             " w-full max-w-md transform transition-all duration-300 ease-in-out",

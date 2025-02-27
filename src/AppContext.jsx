@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, limit, query } from "firebase/firestore";
+import { toast } from "sonner";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -55,7 +56,33 @@ export const AppProvider = ({ children }) => {
             ...newCategoryInfo,
         };
         console.log(newCategory);
-        setCategories((prev) => [...prev, newCategory]);
+        //post to DB successfull
+        if (true) {
+            setTimeout(
+                () =>
+                    toast.success("Collection Added", {
+                        duration: 2000,
+                        position: "top-left",
+                    }),
+                2000
+            );
+
+            setCategories((prev) => [...prev, newCategory]);
+        } else {
+            //post to DB not successfull
+            setTimeout(
+                () =>
+                    toast.error(
+                        "Cannot reach database, unable to add Collection",
+                        {
+                            duration: 2000,
+                            position: "top-left",
+                        }
+                    ),
+                2000
+            );
+            setCategories((prev) => [...prev]);
+        }
     }
 
     for (let cat of categories) {
