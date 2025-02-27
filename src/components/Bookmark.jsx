@@ -15,102 +15,12 @@ import {
 import bookmarkIcon from "../assets/icons/bookmark.svg";
 import { useAppContext } from "../AppContext";
 
-// const HARD_CODED_CATEGORIES = [
-//     {
-//         id: "ro7Sz05bCKdfzFaYUOx7",
-//         name: "network",
-//         userID: "dNC63cyuDbEoEntxBpe9",
-//         contentID: [
-//             "HIM6R8AbiEKBZWhkIy8Y",
-//             "j9Tq3xCdLp7mRv1sFg0H",
-//             "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
-//         ],
-//         createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
-//     },
-//     {
-//         id: "lRqX0IFdr6u1gQXRBGa1",
-//         name: "drive",
-//         userID: "dNC63cyuDbEoEntxBpe9",
-//         contentID: [
-//             "afYzXislW1iopWhNyQF3",
-//             "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
-//         ],
-//         createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
-//     },
-// ];
-
 export default function Bookmark({ contentInfo }) {
-    /*
-    Bookmark should have a prop contentInfo:
-        {contentId, userId?} = contentInfo
-    */
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const {
-        content,
-        currentIndex,
-        categories,
-        handleCategoryToggle,
-        handleCreateNewCollection,
-    } = useAppContext();
-    // const [categories, setCategories] = useState([]);
+    const { categories, handleCategoryToggle, handleCreateNewCollection } =
+        useAppContext();
     console.log(`content Id being looked at: ${contentInfo.id}`);
-
-    // function handleCategoryToggle(categoryIndex) {
-    //     /*
-    //     if selectedCategories.includes(categoryId)
-    //         then it was already checked so uncheck it now...
-    //         -remove contentId from category.contentID...use array filter
-    //         -UPDATE category collection in DB using categoryId
-    //         -if DB update successful, display confimation message
-    //             -else display error message
-    //     else
-    //         it was unchecked so check it
-    //         -add contentId to category.contentID array
-    //         -update category collection in db
-    //         -if DB update successful, display confimation method
-    //             -else display error message
-
-    //      */
-    //     const newCategories = [...categories];
-    //     const indexOfID = newCategories[categoryIndex].contentID.findIndex(
-    //         (id) => id === contentId
-    //     );
-    //     indexOfID !== -1
-    //         ? newCategories[categoryIndex].contentID.splice(indexOfID, 1)
-    //         : newCategories[categoryIndex].contentID.push(contentId);
-
-    //     setCategories(newCategories);
-    // }
-
-    // for (let cat of categories) {
-    //     console.log(`${cat.name} --content ids: ${cat.contentID}`);
-    // }
-
-    // function handleCreateNewCollection(newCategoryInfo) {
-    //     /*
-    //     -use contentId prop to create newCategory object
-    //         -const {name, createdAt} = newCategoryInfo
-    //         -create a random category Id that look like ids in DB
-    //         -format createdAt date to look like data in DB**
-    //         -where to get userID????
-
-    //     -what about the icon picture? logic for how to get it?
-
-    //     -setCategories
-    //     -display confirmation message (inside NewCollectionPopup dialog, before removing visiability)
-    //     -POST To firestore DB
-
-    //      */
-    //     let newCategory = {
-    //         id: Date.now(),
-    //         userID: "dNC63cyuDbEoEntxBpe9",
-    //         contentID: [],
-    //         ...newCategoryInfo,
-    //     };
-    //     console.log(newCategory);
-    //     setCategories([...categories, newCategory]);
-    // }
 
     function handleCloseDialog() {
         setIsDialogVisible(false);
@@ -127,15 +37,6 @@ export default function Bookmark({ contentInfo }) {
             return () => clearTimeout(timer);
         }
     }, [isDialogOpen]);
-
-    // useEffect(() => {
-    //     console.log("inside useEffect");
-    //     /**Add code here to fetch Categories from DB by doing:
-    //      * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
-    //      * result from the function should give back an array
-    //      */
-    //     setCategories(HARD_CODED_CATEGORIES);
-    // }, []);
 
     return (
         <>
