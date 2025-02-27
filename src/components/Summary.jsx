@@ -58,7 +58,7 @@ export default function Summary() {
                 </ul>
             </section>
             <div className="flex justify-end">
-                <Bookmark contentInfo={content[currentIndex]} />
+                <Bookmark contentInfo={content[currentIndex] ?? { id: "" }} />
             </div>
         </section>
     );
