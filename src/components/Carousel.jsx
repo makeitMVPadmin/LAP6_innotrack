@@ -46,21 +46,23 @@ const CustomCarousel = () => {
               />
               <div className="p-2 pt-4 bg-[#EBF1F6] min-h-[9rem]">
                 <div className="flex justify-between">
-                  <h1 className="text-xl font-semibold">{item.title}</h1>
-                  <Bookmark contentInfo={item.id} />
+                  <h1 className="text-xl sm:text-3xl  font-semibold line-clamp-2">
+                    {item.title}
+                  </h1>
+                  {/* <Bookmark contentInfo={item.id} /> */}
                 </div>
 
-                <div className="relative mt-[2rem]">
-                  <p className="text-sm sm:text-base">{item.publisher}</p>
+                <p className="text-base sm:text-lg pt-2 pb-1">
+                  {item.publisher}
+                </p>
 
-                  <Button
+                {/* <Button
                     className="absolute bottom-[-0.625rem] right-1 text-[#28363F] bg-yellow-400 
     hover:bg-yellow-500 border-black border-l border-t border-r-2 
     border-b-2 rounded-lg shadow-customButton transition"
                   >
                     Read More
-                  </Button>
-                </div>
+                  </Button> */}
               </div>
             </div>
           </CarouselItem>
