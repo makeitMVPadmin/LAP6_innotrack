@@ -13,6 +13,7 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog";
 import bookmarkIcon from "../assets/icons/bookmark.svg";
+import { useAppContext } from "../AppContext";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -47,7 +48,6 @@ export default function Bookmark({ contentId }) {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
 
     function handleCategoryToggle(categoryIndex) {
         /*
