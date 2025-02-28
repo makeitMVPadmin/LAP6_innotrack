@@ -53,7 +53,6 @@ const CustomCarousel = () => {
                                     <h1 className="text-xl sm:text-3xl  font-semibold line-clamp-2">
                                         {item.title}
                                     </h1>
-                                    <Bookmark contentInfo={item} />
                                 </div>
 
                                 <p className="text-base sm:text-lg pt-2 pb-1">
