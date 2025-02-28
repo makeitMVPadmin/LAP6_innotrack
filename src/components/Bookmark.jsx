@@ -5,93 +5,26 @@ import { useEffect, useState } from "react";
 import NewCollectionPopup from "./NewCollectionPopup";
 import { cn } from "@/lib/utils";
 import {
-    Dialog,
-    DialogTrigger,
-    DialogContent,
+    CustomDialog as Dialog,
+    CustomDialogTrigger as DialogTrigger,
+    CustomDialogContent as DialogContent,
+} from "@/components/ui/custom-dialog";
+import {
     DialogHeader,
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
 import bookmarkIcon from "../assets/icons/bookmark.svg";
+import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
+import { useAppContext } from "../AppContext";
 
-const HARD_CODED_CATEGORIES = [
-    {
-        id: "ro7Sz05bCKdfzFaYUOx7",
-        name: "network",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: [
-            "HIM6R8AbiEKBZWhkIy8Y",
-            "j9Tq3xCdLp7mRv1sFg0H",
-            "magPC2025asusROG",
-        ],
-        createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
-    },
-    {
-        id: "lRqX0IFdr6u1gQXRBGa1",
-        name: "drive",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: ["afYzXislW1iopWhNyQF3"],
-        createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
-    },
-];
-
-export default function Bookmark({ contentId }) {
-    /*
-    Bookmark should have a prop contentInfo:
-        {contentId, userId?} = contentInfo
-    */
+export default function Bookmark({ contentInfo }) {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    // let { currContentId } = contentInfo;
-
-    function handleCategoryToggle(categoryId) {
-        /*
-        if contentID is an array content ids
-            if setSelectedCategories.includes(categoryId)
-                then it was already checked so uncheck it now...
-                -remove contentId (prop) from category.contentID..use filter?
-                    -update category collection in db 
-                    -if DB update successful, display confimation method
-            else
-                it was unchecked so check it
-                -add contentId (prop) to category.contentID array
-                    -update category collection in db 
-                    -if DB update successful, display confimation method
-
-         */
-
-        setSelectedCategories((prev) =>
-            prev.includes(categoryId)
-                ? prev.filter((id) => id !== categoryId)
-                : [...prev, categoryId]
-        );
-        console.log("inside HANDLE TOGGLE");
-        console.log("Current Selected Category array: ", selectedCategories);
-    }
-
-    function handleCreateNewCollection(newCategoryInfo) {
-        /* **Daryl will add a 'bookmark category collection to DB**
-        -use contentInfo prop to create newCategory object
-            -const {name, createdAt} = newCategoryInfo
-            -how to create a catgory Id that matches DB collection ID?
-            -format createdAt date to look like data in DB
-        -what about the icon picture? logic for how to get it?
-            -
-        -where to get userID????
-        -POST To firestore DB
-        -setCategories with newly created category
-         */
-        let newCategory = {
-            id: Date.now(),
-            userID: "dNC63cyuDbEoEntxBpe9",
-            contentID: contentId,
-            ...newCategoryInfo,
-        };
-        console.log(newCategory);
-        setCategories([...categories, newCategory]);
-    }
+    const { categories, handleCategoryToggle, handleCreateNewCollection } =
+        useAppContext();
+    const [icon, setIcon] = useState(bookmarkIcon);
+    console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
         setIsDialogVisible(false);
@@ -109,40 +42,15 @@ export default function Bookmark({ contentId }) {
         }
     }, [isDialogOpen]);
 
-    /*
-    fetch existing Categories from DB when component mounts
-        -setCategories with the fetched data
-        ...
-        each existing category looks like {id, name, userid, contentid[], createdAt}
-        let arrayOfSelectedCategories
-        loop through existing category array
-            if(contentId(prop) inside/=== category.contentID)
-                arrayOfSelectedCategories.push(contentId)
-        -setSelectedCategories(arrayOfSelectedCategories)
-
-    */
     useEffect(() => {
-        console.log("inside useEffect");
-
-        /**Add code here to fetch Categories from DB by doing:
-         * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
-         *
-         * result from the function should give back an array
-         */
-        setCategories(HARD_CODED_CATEGORIES);
-        console.log("Initial Categories: ", categories);
-        //set selected categories
-        for (let cat of categories) {
-            if (cat.contentID.includes(contentId)) {
-                console.log(
-                    cat.name,
-                    " has the current content in it's contentID array!"
-                );
-                setSelectedCategories([...selectedCategories, cat.id]);
-            }
+        const filled = (category) =>
+            category.contentID.includes(contentInfo.id);
+        if (categories.some(filled)) {
+            setIcon(bookmarkFilledIcon);
+        } else {
+            setIcon(bookmarkIcon);
         }
-        console.log("Initial Selected Category array: ", selectedCategories);
-    }, []);
+    });
 
     return (
         <>
@@ -155,26 +63,26 @@ export default function Bookmark({ contentId }) {
                 }}
             >
                 <DialogTrigger asChild>
-                    <img src={bookmarkIcon} alt="Bookmark Icon" />
+                    <img src={icon} alt="Bookmark Icon" />
                 </DialogTrigger>
-                <DialogContent className="p-0 bg-transparent border-none shadow-none">
+                <DialogContent className="p-0 bg-transparent border-none shadow-none top-80">
                     <div
                         className={cn(
                             "transform transition-all duration-300 ease-in-out",
                             isDialogVisible
-                                ? "-translate-x-[600px]"
+                                ? "-translate-x-48"
                                 : "-translate-x-[1500px]"
                         )}
                     >
-                        <div className="w-[346px] h-[358px] px-6 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
+                        <div className="w-60 h-64 px-5 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
                             <DialogHeader className="p-0 mb-4">
-                                <DialogTitle className="text-2xl">
+                                <DialogTitle className="text-lg">
                                     Add to A Collection
                                 </DialogTitle>
                             </DialogHeader>
                             <div className="flex-1">
-                                <ScrollArea className="h-[210px] py-2">
-                                    {categories.map((category) => (
+                                <ScrollArea className="h-36 py-2">
+                                    {categories.map((category, index) => (
                                         <div
                                             key={category.id}
                                             className="flex items-center space-x-2 mb-2"
@@ -182,23 +90,24 @@ export default function Bookmark({ contentId }) {
                                             <img
                                                 src="../assets/placeholder.svg"
                                                 alt=""
-                                                className="w-12 h-12 rounded mr-2"
+                                                className="w-8 h-8 rounded mr-2"
                                             />
                                             <Checkbox
                                                 id={`category-${category.id}`}
-                                                checked={selectedCategories.includes(
-                                                    category.id
+                                                checked={category.contentID.includes(
+                                                    contentInfo.id
                                                 )}
                                                 onCheckedChange={() =>
                                                     handleCategoryToggle(
-                                                        category.id
+                                                        index,
+                                                        contentInfo.id
                                                     )
                                                 }
                                                 className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
                                             />
                                             <label
                                                 htmlFor={`category-${category.id}`}
-                                                className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                className="text-md font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                             >
                                                 {category.name}
                                             </label>
@@ -211,9 +120,11 @@ export default function Bookmark({ contentId }) {
                                     onCreateCollection={
                                         handleCreateNewCollection
                                     }
+                                    bookmarks={categories}
                                 />
                                 <Button
                                     onClick={handleCloseDialog}
+                                    size="sm"
                                     className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
                                 >
                                     Done
