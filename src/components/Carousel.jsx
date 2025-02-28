@@ -1,39 +1,88 @@
 import { useAppContext } from "../AppContext";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
+import Bookmark from "./Bookmark";
+import { Button } from "@/components/ui/button";
 
 const CustomCarousel = () => {
-  const { content } = useAppContext();
+    const { content, currentIndex, setCurrentIndex } = useAppContext();
 
-  if (content.length === 0) return <p>Loading...</p>;
+    const [api, setApi] = useState();
+    const [count, setCount] = useState(0);
 
-  return (
-    <Carousel className="w-[100%] max-w-4xl mx-auto">
-      <CarouselContent>
-        {content.map((item) => (
-          <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3 p-4">
-            <div className="border rounded-lg shadow-md p-4">
-              <img
-                src={item.picture}
-                alt={item.title}
-                className="w-full h-48 object-cover rounded-md mt-2"
-              />
-              <h1 className="text-xl font-semibold">{item.title}</h1>
-              <p className="text-gray-600">{item.publisher}</p>
-              <p className="text-gray-600">{item.summary}</p>
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+
+        setCount(api.scrollSnapList().length);
+
+        api.on("select", () => {
+            setCurrentIndex(api.selectedScrollSnap());
+        });
+    }, [api]);
+
+    if (content.length === 0) return <p>Loading...</p>;
+
+    return (
+        <Carousel
+            setApi={setApi}
+            className="w-[100%] max-w-3xl mx-auto h-fit pt-[2.25rem]"
+        >
+            <CarouselContent>
+                {content.map((item, index) => (
+                    <CarouselItem
+                        key={item.id}
+                        index={index}
+                        className="basis:1/1 p-4"
+                    >
+                        <div className="rounded-[7.869px] border-t-[0.997px] border-r-[1.994px] border-b-[1.994px] border-l-[0.997px] border-[#182127] shadow-[0px_0.997px_1.994px_0px_rgba(0,0,0,0.05) bg-white overflow-hidden ">
+                            <img
+                                src={item.picture}
+                                alt={item.title}
+                                className="w-full aspect-[56/25] object-cover rounded-t-[7.869px]"
+                            />
+                            <div className="p-2 pt-4 bg-[#EBF1F6] min-h-[9rem]">
+                                <div className="flex justify-between">
+                                    <h1 className="text-xl sm:text-3xl  font-semibold line-clamp-2">
+                                        {item.title}
+                                    </h1>
+                                </div>
+
+                                <p className="text-base sm:text-lg pt-2 pb-1">
+                                    {item.publisher}
+                                </p>
+
+                                {/* <Button
+                    className="absolute bottom-[-0.625rem] right-1 text-[#28363F] bg-yellow-400 
+    hover:bg-yellow-500 border-black border-l border-t border-r-2 
+    border-b-2 rounded-lg shadow-customButton transition"
+                  >
+                    Read More
+                  </Button> */}
+                            </div>
+                        </div>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            <div className="static flex mt-[1rem] justify-center gap-11">
+                <CarouselPrevious className="static translate-none" />
+                <p className="font-fraunces flex gap-6 text-xl">
+                    <span className="font-inter font-semibold">
+                        {currentIndex + 1}
+                    </span>{" "}
+                    of <span className="font-inter font-semibold">{count}</span>
+                </p>
+                <CarouselNext className="static translate-none" />
             </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  );
+        </Carousel>
+    );
 };
 
 export default CustomCarousel;
