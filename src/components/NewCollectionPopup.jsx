@@ -71,24 +71,27 @@ export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
                 }}
             >
                 <DialogTrigger asChild>
-                    <Button className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton">
+                    <Button
+                        size="sm"
+                        className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
+                    >
                         New Collection
                     </Button>
                 </DialogTrigger>
                 <DialogContent
                     OnInteractOutside={(e) => e.preventDefault()}
-                    className="p-0 bg-transparent border-none shadow-none top-[75%]"
+                    className="p-0 bg-transparent border-none shadow-none top-3/4"
                 >
                     <div
                         className={cn(
                             " w-full max-w-md transform transition-all duration-300 ease-in-out",
                             isPopupVisible
-                                ? "-translate-x-[590px]"
+                                ? "-translate-x-48"
                                 : "-translate-x-[1500px]"
                         )}
                     >
-                        <div className="w-[324px] border-black border-r-2 border-b-2 rounded-xl bg-[#FCFDFD] my-4">
-                            <div className="pt-4 pb-6 px-4">
+                        <div className="w-60 border-black border-r-2 border-b-2 rounded-xl bg-[#FCFDFD] my-4">
+                            <div className="pt-3 pb-4 px-4">
                                 <Input
                                     value={newCategoryName}
                                     onChange={(e) =>
@@ -96,7 +99,7 @@ export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
                                     }
                                     placeholder="Enter collection name"
                                     className={cn(
-                                        "text-lg border-[#182127] border-r-2 border-b-2 rounded-lg",
+                                        "text-lg border-[#182127] border-r-2 border-b-2 rounded-lg h-8",
                                         error && "border-red-600"
                                     )}
                                 ></Input>
@@ -104,6 +107,7 @@ export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
                             <DialogFooter className="pb-4 px-4 flex sm:justify-between">
                                 <Button
                                     onClick={handleClosePopup}
+                                    size="sm"
                                     className="bg-[#FCFDFD] border-black border-l border-t border-r-2 border-b-2 focus:outline-none"
                                     variant="ghost"
                                 >
@@ -111,6 +115,7 @@ export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
                                 </Button>
                                 <Button
                                     onClick={handleCreateNewCategory}
+                                    size="sm"
                                     className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
                                 >
                                     Done

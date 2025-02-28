@@ -15,6 +15,7 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog";
 import bookmarkIcon from "../assets/icons/bookmark.svg";
+import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
 import { useAppContext } from "../AppContext";
 
 export default function Bookmark({ contentInfo }) {
@@ -22,6 +23,7 @@ export default function Bookmark({ contentInfo }) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { categories, handleCategoryToggle, handleCreateNewCollection } =
         useAppContext();
+    const [icon, setIcon] = useState(bookmarkIcon);
     console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
@@ -40,6 +42,16 @@ export default function Bookmark({ contentInfo }) {
         }
     }, [isDialogOpen]);
 
+    useEffect(() => {
+        const filled = (category) =>
+            category.contentID.includes(contentInfo.id);
+        if (categories.some(filled)) {
+            setIcon(bookmarkFilledIcon);
+        } else {
+            setIcon(bookmarkIcon);
+        }
+    }, [categories]);
+
     return (
         <>
             <Dialog
@@ -51,25 +63,25 @@ export default function Bookmark({ contentInfo }) {
                 }}
             >
                 <DialogTrigger asChild>
-                    <img src={bookmarkIcon} alt="Bookmark Icon" />
+                    <img src={icon} alt="Bookmark Icon" />
                 </DialogTrigger>
-                <DialogContent className="p-0 bg-transparent border-none shadow-none">
+                <DialogContent className="p-0 bg-transparent border-none shadow-none top-80">
                     <div
                         className={cn(
                             "transform transition-all duration-300 ease-in-out",
                             isDialogVisible
-                                ? "-translate-x-[600px]"
+                                ? "-translate-x-48"
                                 : "-translate-x-[1500px]"
                         )}
                     >
-                        <div className="w-[346px] h-[358px] px-6 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
+                        <div className="w-60 h-64 px-5 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
                             <DialogHeader className="p-0 mb-4">
-                                <DialogTitle className="text-2xl">
+                                <DialogTitle className="text-lg">
                                     Add to A Collection
                                 </DialogTitle>
                             </DialogHeader>
                             <div className="flex-1">
-                                <ScrollArea className="h-[210px] py-2">
+                                <ScrollArea className="h-36 py-2">
                                     {categories.map((category, index) => (
                                         <div
                                             key={category.id}
@@ -78,13 +90,10 @@ export default function Bookmark({ contentInfo }) {
                                             <img
                                                 src="../assets/placeholder.svg"
                                                 alt=""
-                                                className="w-12 h-12 rounded mr-2"
+                                                className="w-8 h-8 rounded mr-2"
                                             />
                                             <Checkbox
                                                 id={`category-${category.id}`}
-                                                // checked={selectedCategories.includes(
-                                                //     category.id
-                                                // )}
                                                 checked={category.contentID.includes(
                                                     contentInfo.id
                                                 )}
@@ -98,7 +107,7 @@ export default function Bookmark({ contentInfo }) {
                                             />
                                             <label
                                                 htmlFor={`category-${category.id}`}
-                                                className="text-lg font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                className="text-md font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                             >
                                                 {category.name}
                                             </label>
@@ -115,6 +124,7 @@ export default function Bookmark({ contentInfo }) {
                                 />
                                 <Button
                                     onClick={handleCloseDialog}
+                                    size="sm"
                                     className="text-[#28363F] bg-yellow-400 hover:bg-yellow-400 border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton"
                                 >
                                     Done
