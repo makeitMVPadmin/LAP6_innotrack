@@ -50,7 +50,7 @@ export default function Bookmark({ contentInfo }) {
         } else {
             setIcon(bookmarkIcon);
         }
-    }, [categories]);
+    });
 
     return (
         <>

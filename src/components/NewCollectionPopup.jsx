@@ -78,10 +78,7 @@ export default function NewCollectionPopup({ onCreateCollection, bookmarks }) {
                         New Collection
                     </Button>
                 </DialogTrigger>
-                <DialogContent
-                    OnInteractOutside={(e) => e.preventDefault()}
-                    className="p-0 bg-transparent border-none shadow-none top-3/4"
-                >
+                <DialogContent className="p-0 bg-transparent border-none shadow-none top-3/4">
                     <div
                         className={cn(
                             " w-full max-w-md transform transition-all duration-300 ease-in-out",
