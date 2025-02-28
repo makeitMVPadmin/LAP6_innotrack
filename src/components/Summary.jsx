@@ -12,8 +12,6 @@ export default function Summary() {
 
     const tags = ["DEV", "DATA"];
 
-    console.log("loaded");
-
     return (
         <section className="px-[5rem] py-[2rem] mx-[1rem] mt-[7rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
             <h2 className="font-fraunces flex gap-4 items-center text-2xl font-semibold mb-1 tracking-normal">
@@ -57,7 +55,14 @@ export default function Summary() {
                     })}
                 </ul>
             </section>
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-[1.5rem] gap-[1rem]">
+            <a href="#"
+                    className="font-montserrat font-semibold text-sm/[1.57] px-3.5 py-1.5 text-[#28363F] bg-yellow-400 
+    hover:bg-yellow-500 border-black border-l border-t border-r-2 
+    border-b-2 rounded-lg shadow-customButton transition"
+                  >
+                    Read More
+                  </a>
                 <Bookmark contentInfo={content[currentIndex] ?? { id: "" }} />
             </div>
         </section>
