@@ -119,13 +119,13 @@ export const AppProvider = ({ children }) => {
     useEffect(() => {
         const fetchContent = async () => {
             const querySnapshot = await getDocs(
-                query(collection(db, "content"), limit(7))
+                query(collection(db, "contents"), limit(7))
             );
             const contentData = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
-            console.log(contentData);
+            console.log("contentData: ",contentData);
             setContent(contentData);
         };
         fetchContent();

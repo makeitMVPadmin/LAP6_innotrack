@@ -5,15 +5,9 @@ import Bookmark from "./Bookmark";
 export default function Summary() {
     const { content, currentIndex } = useAppContext();
 
-    const keyPoints = [
-        "Smarter Assistants – AI-driven virtual assistants are becoming more intuitive, personalized, and responsive to user needs.",
-        "Automation & Robotics – Advancements in AI-powered automation are streamlining tasks in homes, workplaces, and industries.",
-        "Immersive AI Experiences – AI is enhancing entertainment, healthcare, and smart devices, creating more seamless and interactive user experiences.",
-    ];
+    const keyPoints = content[currentIndex] ? content[currentIndex].keyPoints : [];
 
-  const tags = ["DEV", "DATA"];
-
-  console.log("loaded");
+  const tags = content[currentIndex] ? [content[currentIndex].tag] : [];
 
     return (
         <>
@@ -60,7 +54,7 @@ export default function Summary() {
                   </ul>
               </section>
               <div className="flex justify-end mt-[1.5rem] gap-[1rem]">
-            <a href="#"
+            <a href={content[currentIndex].url} target="_blank"
                     className="font-montserrat font-semibold text-sm/[1.57] px-3.5 py-1.5 text-[#28363F] bg-yellow-400 
     hover:bg-yellow-500 border-black border-l border-t border-r-2 
     border-b-2 rounded-lg shadow-customButton transition"

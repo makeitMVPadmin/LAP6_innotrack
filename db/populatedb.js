@@ -3,6 +3,9 @@ import * as fs from "fs";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import OpenAI from "openai";
+import * as firebase from "firebase-admin/app";
+import * as firestore from "firebase-admin/firestore";
+import serviceAccount from "./service-account.json" with {type: "json"};
 
 const result = dotenv.config();
 
@@ -16,6 +19,21 @@ const OPENAI_KEY = process.env.OPENAI_KEY;
 const openai = new OpenAI({
     apiKey: OPENAI_KEY
 });
+
+const firebaseConfig = {
+    apiKey: process.env.VITE_FIREBASE_API_KEY,
+    authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.VITE_FIREBASE_APP_ID,
+    measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+  };
+
+  firebase.initializeApp({
+    credential: firebase.cert(serviceAccount)
+  });
+  const db = firestore.getFirestore();
 
 (async () => {
 
@@ -56,8 +74,6 @@ const openai = new OpenAI({
             });
 
             const openaires = JSON.parse(openAIResponse.choices[0].message.content);
-            console.log(openaires);
-
             return {
                 datePublished: article.publishedAt,
                 picture: article.urlToImage,
@@ -77,6 +93,21 @@ const openai = new OpenAI({
         const toDbformat = result.map(result => result.value);
 
         fs.writeFileSync("./db/data.json", JSON.stringify(toDbformat));
+
+        const snapshot = await db.collection("contents").get();
+
+        const contentIds = [];
+
+        snapshot.forEach(doc => contentIds.push(doc.id));
+
+        const asyncBarrel = contentIds.map(async (id) => await db.collection("contents").doc(id).delete())
+
+        await Promise.allSettled(asyncBarrel);
+
+        toDbformat.forEach(async(item) => {
+            const res = await db.collection("contents").add(item);
+            console.log(`Added document with ID: ${res.id}`)
+        });
     }
     catch(e){
         console.log(e);

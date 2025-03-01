@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .env
 launchacademyp6-firebase-adminsdk*
+service-account.json
+data.json
