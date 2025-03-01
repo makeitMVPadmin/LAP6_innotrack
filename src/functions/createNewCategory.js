@@ -49,7 +49,7 @@ export default async function createNewCategory(categoryInfo) {
         const newCategory = {
             id: categoryRef.id,
             userId: categoryInfo.userID,
-            contenIds: [],
+            contentIds: [],
             name: categoryInfo.name,
             createdAt: formatDate(categoryInfo.createdAt),
         };
