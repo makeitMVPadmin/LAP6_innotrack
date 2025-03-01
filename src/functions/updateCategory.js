@@ -136,5 +136,4 @@ async function test() {
     }
 }
 
-// test();
-updateCategory("I8MIrt1J0C4g3MaUB36b", "g0NqCiQXvGyueTJo8b8z", false);
+test();
