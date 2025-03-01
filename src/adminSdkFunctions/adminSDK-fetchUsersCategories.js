@@ -1,4 +1,4 @@
-import fetchUsers from "./fetchUsers.js";
+import fetchUsers from "../functions/fetchUsers.js";
 import admin from "firebase-admin";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
