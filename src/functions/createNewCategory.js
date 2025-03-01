@@ -37,11 +37,10 @@ async function createNewCategory(categoryInfo) {
 
         //create the category object
         const newCategory = {
-            id: categoryRef.id,
-            userId: categoryInfo.userID,
             contentIds: [],
-            name: categoryInfo.name,
             createdAt: formatDate(categoryInfo.createdAt),
+            name: categoryInfo.name,
+            userId: categoryInfo.userID,
         };
 
         //write to firestore
