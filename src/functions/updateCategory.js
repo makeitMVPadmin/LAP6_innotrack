@@ -1,54 +1,39 @@
-import admin from "firebase-admin";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { db } from "../../firebase";
+import {
+    doc,
+    getDoc,
+    updateDoc,
+    arrayUnion,
+    arrayRemove,
+} from "firebase/firestore";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Initialize Firebase Admin SDK using the JSON file
-const serviceAccount = join(
-    __dirname,
-    "../../launchacademyp6-firebase-adminsdk-fbsvc-f4e991968e.json"
-);
-
-// Initialize with a unique name
-if (!admin.apps.find((app) => app?.name === "update-category-app")) {
-    admin.initializeApp(
-        {
-            credential: admin.credential.cert(serviceAccount),
-        },
-        "update-category-app"
-    );
-}
-
-const db = admin.apps
-    .find((app) => app?.name === "update-category-app")
-    .firestore();
-
-export default async function updateCategory(categoryId, contentId, isAdding) {
+async function updateCategory(categoryId, contentId, isAdding) {
     try {
         //validate input
         if (!categoryId || !contentId) {
             throw new Error("categoryId and contentId are required");
+            return {};
         }
 
         //get a reference to the category using the id
-        const categoryDocRef = db.collection("categories").doc(categoryId);
+        const categoryDocRef = doc(db, "categories", categoryId);
 
         //fetch the data
-        const categoryDoc = await categoryDocRef.get();
+        const categoryDoc = await getDoc(categoryDocRef);
         //verify that category with categoryid exists in DB
-        if (!categoryDoc.exists) {
+        if (!categoryDoc.exists()) {
             throw new Error(`Category with ID ${categoryId} not found`);
+            return {};
         }
 
-        await categoryDocRef.update({
+        await updateDoc(categoryDocRef, {
             contentIds: isAdding
-                ? admin.firestore.FieldValue.arrayUnion(contentId)
-                : admin.firestore.FieldValue.arrayRemove(contentId),
+                ? arrayUnion(contentId)
+                : arrayRemove(contentId),
         });
 
         //fetch updated category
-        const updatedCategoryDoc = await categoryDocRef.get();
+        const updatedCategoryDoc = await getDoc(categoryDocRef);
         const updatedCategory = updatedCategoryDoc.data();
 
         //format data
@@ -69,6 +54,7 @@ export default async function updateCategory(categoryId, contentId, isAdding) {
     } catch (error) {
         console.error("Error updating category content: ", error);
         throw error;
+        return {};
     }
 }
 
@@ -136,4 +122,5 @@ async function test() {
     }
 }
 
+export { updateCategory };
 test();
