@@ -1,6 +1,7 @@
 import { useAppContext } from "@/AppContext";
 import { Skeleton } from "./ui/skeleton";
 import Bookmark from "./Bookmark";
+import star from "../assets/icons/star-filled.svg";
 
 export default function Summary() {
     const { content, currentIndex } = useAppContext();
@@ -46,8 +47,9 @@ export default function Summary() {
                           return (
                               <li
                                   key={index}
-                                  className="relative font-montserrat text-base/[1.5] mt-6 ml-[3.125rem] before:content-listStar before:absolute before:left-[-2.375rem] before:top-[2px] text-start"
+                                  className="flex gap-5 font-montserrat text-base/[1.5] mt-6 text-start"
                               >
+                                <span><img src={star} alt="" /></span>
                                   <span
                                       key={`${index}${currentIndex}`}
                                       className="animate-fadeInOut"
