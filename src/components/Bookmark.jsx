@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import bookmarkIcon from "../assets/icons/bookmark.svg";
 import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
+import collectionPic from "../assets/placeholder.jpg";
 import { useAppContext } from "../AppContext";
 
 export default function Bookmark({ contentInfo }) {
@@ -24,6 +25,7 @@ export default function Bookmark({ contentInfo }) {
     const { categories, handleCategoryToggle, handleCreateNewCollection } =
         useAppContext();
     const [icon, setIcon] = useState(bookmarkIcon);
+    const [picture, setPicture] = useState(collectionPic);
     console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
@@ -50,6 +52,16 @@ export default function Bookmark({ contentInfo }) {
         } else {
             setIcon(bookmarkIcon);
         }
+        categories.forEach((category) => {
+            if (category.contentID.length >= 1) {
+                let contentId = category.contentID[1];
+                /*
+                DB call, fetch content by Id
+                get it's picture data
+                setPicture
+                */
+            }
+        });
     });
 
     return (
@@ -88,8 +100,8 @@ export default function Bookmark({ contentInfo }) {
                                             className="flex items-center space-x-2 mb-2"
                                         >
                                             <img
-                                                src="../assets/placeholder.svg"
-                                                alt=""
+                                                src={picture}
+                                                alt="bookmark collection picture"
                                                 className="w-8 h-8 rounded mr-2"
                                             />
                                             <Checkbox
