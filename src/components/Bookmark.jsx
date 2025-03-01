@@ -18,6 +18,7 @@ import bookmarkIcon from "../assets/icons/bookmark.svg";
 import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
 import collectionPic from "../assets/placeholder.jpg";
 import { useAppContext } from "../AppContext";
+import { fetchContent } from "../functions/fetchContent.js";
 
 export default function Bookmark({ contentInfo }) {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -52,15 +53,17 @@ export default function Bookmark({ contentInfo }) {
         } else {
             setIcon(bookmarkIcon);
         }
+
         categories.forEach((category) => {
             if (category.contentID.length >= 1) {
-                let contentId = category.contentID[1];
-                /*
-                DB call, fetch content
-                    get back a content object
-                get it's picture data
-                setPicture
-                */
+                const contentId = category.contentID[0];
+                const content = fetchContent(contentId);
+                const isEmpty = (obj) => Object.keys(obj).length === 0;
+                if (isEmpty(content)) {
+                    setPicture(collectionPic);
+                } else {
+                    setPicture(content.picture);
+                }
             }
         });
     });

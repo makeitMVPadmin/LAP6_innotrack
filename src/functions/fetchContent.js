@@ -1,35 +1,16 @@
-import admin from "firebase-admin";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import { errorMonitor } from "events";
+import { db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-// Initialize Firebase Admin SDK using the JSON file
-const serviceAccount = join(
-    __dirname,
-    "../../launchacademyp6-firebase-adminsdk-fbsvc-f4e991968e.json"
-);
-// Initialize with a unique name
-if (!admin.apps.find((app) => app?.name === "content-app")) {
-    admin.initializeApp(
-        {
-            credential: admin.credential.cert(serviceAccount),
-        },
-        "content-app"
-    );
-}
-const db = admin.apps.find((app) => app?.name === "content-app").firestore();
-
-export default async function fetchContent(contentId) {
+async function fetchContent(contentId) {
     try {
-        const contentDocRef = db.collection("content").doc(contentId);
-        const contentDoc = await contentDocRef.get();
+        const contentDocRef = doc(db, "content", contentId);
+        const contentSnapshot = await getDoc(contentDocRef);
 
-        if (!contentDoc.exists) {
+        if (!contentSnapshot.exists) {
             throw new Error(`Content with ID ${contentId} not found`);
             return {};
         }
-        const content = contentDoc.data();
+        const content = contentSnapshot.data();
 
         return content;
     } catch (error) {
@@ -52,4 +33,5 @@ async function test() {
     }
 }
 
+export { fetchContent };
 test();
