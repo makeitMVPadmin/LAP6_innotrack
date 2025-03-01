@@ -125,6 +125,7 @@ export const AppProvider = ({ children }) => {
                 id: doc.id,
                 ...doc.data(),
             }));
+            console.log(contentData);
             setContent(contentData);
         };
         fetchContent();
