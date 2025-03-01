@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/dialog";
 import bookmarkIcon from "../assets/icons/bookmark.svg";
 import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
+import collectionPic from "../assets/placeholder.jpg";
 import { useAppContext } from "../AppContext";
+import { fetchContent } from "../functions/fetchContent.js";
 
 export default function Bookmark({ contentInfo }) {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -24,6 +26,7 @@ export default function Bookmark({ contentInfo }) {
     const { categories, handleCategoryToggle, handleCreateNewCollection } =
         useAppContext();
     const [icon, setIcon] = useState(bookmarkIcon);
+    const [picture, setPicture] = useState(collectionPic);
     console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
@@ -51,6 +54,19 @@ export default function Bookmark({ contentInfo }) {
         } else {
             setIcon(bookmarkIcon);
         }
+
+        categories.forEach((category) => {
+            if (category.contentID.length >= 1) {
+                const contentId = category.contentID[0];
+                const content = fetchContent(contentId);
+                const isEmpty = (obj) => Object.keys(obj).length === 0;
+                if (isEmpty(content)) {
+                    setPicture(collectionPic);
+                } else {
+                    setPicture(content.picture);
+                }
+            }
+        });
     });
 
     return (
@@ -89,8 +105,8 @@ export default function Bookmark({ contentInfo }) {
                                             className="flex items-center space-x-2 mb-2"
                                         >
                                             <img
-                                                src="../assets/placeholder.svg"
-                                                alt=""
+                                                src={picture}
+                                                alt="bookmark collection picture"
                                                 className="w-8 h-8 rounded mr-2"
                                             />
                                             <Checkbox
