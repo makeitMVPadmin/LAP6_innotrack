@@ -56,7 +56,8 @@ export default function Bookmark({ contentInfo }) {
             if (category.contentID.length >= 1) {
                 let contentId = category.contentID[1];
                 /*
-                DB call, fetch content by Id
+                DB call, fetch content
+                    get back a content object
                 get it's picture data
                 setPicture
                 */
