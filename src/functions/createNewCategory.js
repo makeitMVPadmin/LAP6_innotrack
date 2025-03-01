@@ -1,29 +1,5 @@
-import fetchCategoriesByUserId from "./fetchUsersCategories.js";
-import admin from "firebase-admin";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Initialize Firebase Admin SDK using the JSON file
-const serviceAccount = join(
-    __dirname,
-    "../../launchacademyp6-firebase-adminsdk-fbsvc-f4e991968e.json"
-);
-
-// Initialize with a unique name
-if (!admin.apps.find((app) => app?.name === "create-category-app")) {
-    admin.initializeApp(
-        {
-            credential: admin.credential.cert(serviceAccount),
-        },
-        "create-category-app"
-    );
-}
-
-const db = admin.apps
-    .find((app) => app?.name === "create-category-app")
-    .firestore();
+import { db } from "../../firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -43,7 +19,7 @@ function formatDate(timestamp) {
 export default async function createNewCategory(categoryInfo) {
     try {
         //Generate a new document reference to get an auto-generated ID
-        const categoryRef = db.collection("categories").doc();
+        const categoryRef = doc(collection(db, "categories"));
 
         //create the category object
         const newCategory = {
@@ -55,7 +31,7 @@ export default async function createNewCategory(categoryInfo) {
         };
 
         //write to firestore
-        await categoryRef.set(newCategory);
+        await setDoc(categoryRef, newCategory);
 
         console.log("Created new category: ", newCategory);
         return newCategory;
@@ -66,17 +42,16 @@ export default async function createNewCategory(categoryInfo) {
 
 async function test() {
     try {
-        const testUserId = "g0NqCiQXvGyueTJo8b8z"; //username: jerryjohnson
+        const testUserId = "1uIX6OjnNQi0bSXcmxV0";
         const testCategoryInfo = {
             userID: testUserId,
-            name: "AInews",
+            name: "TestCreateCat",
             createdAt: Date.now(),
         };
         //write to firestore, this function prints
         const newCat = await createNewCategory(testCategoryInfo);
 
-        //fetch all categories to verify creation, this function prints
-        // **Error: fetchCategoriesByUserId is not a function?
+        //fetch all categories to verify creation
         // const userCategories = await fetchCategoriesByUserId(testUserId);
 
         //verify that new category is in results
