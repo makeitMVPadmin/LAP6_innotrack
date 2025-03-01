@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
 
 function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -18,6 +18,20 @@ function formatDate(timestamp) {
 
 async function createNewCategory(categoryInfo) {
     try {
+        //check for duplicate names
+        const categoriesRef = collection(db, "categories");
+        const categoriesSnapshot = await getDocs(categoriesRef);
+
+        const isDuplicate = categoriesSnapshot.docs.some(
+            (doc) =>
+                doc.data().name.toLowerCase() ===
+                categoryInfo.name.toLowerCase()
+        );
+        if (isDuplicate) {
+            console.log("A category witht this name already exists");
+            return {};
+        }
+
         //Generate a new document reference to get an auto-generated ID
         const categoryRef = doc(collection(db, "categories"));
 
