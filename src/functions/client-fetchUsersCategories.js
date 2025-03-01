@@ -1,27 +1,6 @@
-import fetchUsers from "./fetchUsers.js";
-import admin from "firebase-admin";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Initialize Firebase Admin SDK using the JSON file
-const serviceAccount = join(
-    __dirname,
-    "../../launchacademyp6-firebase-adminsdk-fbsvc-f4e991968e.json"
-);
-
-// Initialize with a unique name
-if (!admin.apps.find((app) => app?.name === "categories-app")) {
-    admin.initializeApp(
-        {
-            credential: admin.credential.cert(serviceAccount),
-        },
-        "categories-app"
-    );
-}
-
-const db = admin.apps.find((app) => app?.name === "categories-app").firestore();
+import { db } from "../../firebase";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
+import fetchUsers from "./client-fetchUsers";
 
 const fetchUsersCategories = async ({
     limit = null,
@@ -43,10 +22,11 @@ const fetchUsersCategories = async ({
         // Fetch categories for each user using their ID
         const categoriesPromises = users.map(async (user) => {
             // Use the user's ID to fetch categories
-            const query = db
-                .collection("categories")
-                .where("userId", "==", user.id);
-            const snapshot = await query.get();
+            const categoriesQuery = query(
+                collection(db, "categories"),
+                where("userId", "==", user.id)
+            );
+            const snapshot = await getDocs(categoriesQuery);
 
             // Only retrieve the names from the categories
             const categories = snapshot.docs.map((doc) => doc.data().name); // Return an array of names
@@ -70,22 +50,25 @@ const fetchUsersCategories = async ({
     }
 };
 
-async function fetchCategoriesByUserId(userId) {
+const fetchCategoriesByUserId = async (userId) => {
     try {
-        const query = db.collection("categories").where("userId", "==", userId);
-        const snapshot = await query.get();
+        const categoriesQuery = query(
+            collection(db, "categories"),
+            where("userId", "==", userId)
+        );
+        const snapshot = await getDocs(categoriesQuery);
 
         if (snapshot.empty) {
             console.log("No categories found for user ID:", userId);
             return [];
         }
 
-        return snapshot.docs.map((doc) => doc.data().name);
+        return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
         console.error("Error fetching categories for user ID:", userId, error);
         return [];
     }
-}
+};
 
 async function test() {
     try {
@@ -98,7 +81,7 @@ async function test() {
         //console.log("Categories:", categories);
 
         // Test fetching categories by user ID
-        const userId = "1uIX6OjnNQi0bSXcmxV0"; // Replace with actual user ID
+        const userId = "nuglcztcNzLlTgsysmYB"; // Replace with actual user ID
         const userCategories = await fetchCategoriesByUserId(userId);
         console.log(`Categories for user ${userId}:`, userCategories);
     } catch (error) {
@@ -108,4 +91,4 @@ async function test() {
 
 test();
 
-export default { fetchUsersCategories, fetchCategoriesByUserId };
+export { fetchUsersCategories, fetchCategoriesByUserId };
