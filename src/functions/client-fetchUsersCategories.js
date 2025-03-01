@@ -63,7 +63,7 @@ const fetchCategoriesByUserId = async (userId) => {
             return [];
         }
 
-        return snapshot.docs.map((doc) => doc.data().name);
+        return snapshot.docs.map((doc) => doc.data());
     } catch (error) {
         console.error("Error fetching categories for user ID:", userId, error);
         return [];

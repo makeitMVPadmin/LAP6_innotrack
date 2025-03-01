@@ -98,7 +98,7 @@ async function test() {
         //console.log("Categories:", categories);
 
         // Test fetching categories by user ID
-        const userId = "nuglcztcNzLlTgsysmYB"; // Replace with actual user ID
+        const userId = "1uIX6OjnNQi0bSXcmxV0"; // Replace with actual user ID
         const userCategories = await fetchCategoriesByUserId(userId);
         console.log(`Categories for user ${userId}:`, userCategories);
     } catch (error) {
