@@ -9,7 +9,7 @@ const HARD_CODED_CATEGORIES = [
         id: "ro7Sz05bCKdfzFaYUOx7",
         name: "network",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: [
+        contentIds: [
             "HIM6R8AbiEKBZWhkIy8Y",
             "j9Tq3xCdLp7mRv1sFg0H",
             "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
@@ -20,7 +20,7 @@ const HARD_CODED_CATEGORIES = [
         id: "lRqX0IFdr6u1gQXRBGa1",
         name: "drive",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: [
+        contentIds: [
             "afYzXislW1iopWhNyQF3",
             "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
         ],
@@ -93,15 +93,27 @@ export const AppProvider = ({ children }) => {
               -else display error message
 
        */
-        const newCategories = [...categories];
-        const indexOfID = newCategories[categoryIndex].contentID.findIndex(
-            (id) => id === contentId
-        );
-        indexOfID !== -1
-            ? newCategories[categoryIndex].contentID.splice(indexOfID, 1)
-            : newCategories[categoryIndex].contentID.push(contentId);
 
-        setCategories(newCategories);
+        setCategories((prev) => {
+            const newCategories = prev.map((cat) => ({
+                ...cat,
+                contentIds: [...(cat.contentIds || [])],
+            }));
+
+            const category = newCategories[categoryIndex];
+
+            if (category.contentIds.includes(contentId)) {
+                category.contentIds = category.contentIds.filter(
+                    (id) => id !== contentId
+                );
+                console.log("Removed contentId: ", contentId);
+            } else {
+                category.contentIds.push(contentId);
+                console.log("Added contentId: ", contentId);
+            }
+
+            return newCategories;
+        });
     }
 
     useEffect(() => {
