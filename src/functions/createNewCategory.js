@@ -16,7 +16,7 @@ function formatDate(timestamp) {
     return date.toLocaleString("en-US", options);
 }
 
-export default async function createNewCategory(categoryInfo) {
+async function createNewCategory(categoryInfo) {
     try {
         //Generate a new document reference to get an auto-generated ID
         const categoryRef = doc(collection(db, "categories"));
@@ -37,6 +37,7 @@ export default async function createNewCategory(categoryInfo) {
         return newCategory;
     } catch (error) {
         console.log("Error creating new category: ", error);
+        return {};
     }
 }
 
@@ -72,4 +73,5 @@ async function test() {
     }
 }
 
+export { createNewCategory };
 test();

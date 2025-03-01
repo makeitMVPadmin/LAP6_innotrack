@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { toast } from "sonner";
+import { createNewCategory } from "./functions/createNewCategory";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -34,59 +35,46 @@ export const AppProvider = ({ children }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [categories, setCategories] = useState([]);
 
-    function handleCreateNewCollection(newCategoryInfo) {
-        /*
-    -use contentId prop to create newCategory object
-        -const {name, createdAt} = newCategoryInfo
-        -create a random category Id that look like ids in DB
-        -format createdAt date to look like data in DB**
-        -where to get userID????
+    async function handleCreateNewCollection(newCategoryInfo) {
+        try {
+            let categoryInfo = {
+                userID: "1uIX6OjnNQi0bSXcmxV0",
+                name: newCategoryInfo.name,
+                createdAt: newCategoryInfo.createdAt,
+            };
+            const newCategory = await createNewCategory(categoryInfo);
+            const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-    -what about the icon picture? logic for how to get it?
-    
-    -setCategories
-    -display confirmation message (inside NewCollectionPopup dialog, before removing visiability)
-    -POST To firestore DB
-    
-     */
-        let newCategory = {
-            id: Date.now(),
-            userID: "dNC63cyuDbEoEntxBpe9",
-            contentID: [],
-            ...newCategoryInfo,
-        };
-        console.log(newCategory);
-        //post to DB successfull
-        if (true) {
-            setTimeout(
-                () =>
-                    toast.success("Collection Added", {
-                        duration: 2000,
-                        position: "top-left",
-                    }),
-                2000
-            );
-
-            setCategories((prev) => [...prev, newCategory]);
-        } else {
-            //post to DB not successfull
-            setTimeout(
-                () =>
-                    toast.error(
-                        "Cannot reach database, unable to add Collection",
-                        {
+            if (isEmpty(newCategory)) {
+                //post to DB not successfull
+                setTimeout(
+                    () =>
+                        toast.error("Unable to add Collection", {
                             duration: 2000,
                             position: "top-left",
-                        }
-                    ),
-                2000
-            );
-            setCategories((prev) => [...prev]);
+                        }),
+                    2000
+                );
+                setCategories((prev) => [...prev]);
+            } else {
+                //post to DB successfull
+                setTimeout(
+                    () =>
+                        toast.success("Collection Added", {
+                            duration: 2000,
+                            position: "top-left",
+                        }),
+                    2000
+                );
+                setCategories((prev) => [...prev, newCategory]);
+            }
+        } catch (error) {
+            console.error("Error creating collection: ", error);
+            toast.error("Unable to add Collection", {
+                duration: 2000,
+                position: "top-left",
+            });
         }
-    }
-
-    for (let cat of categories) {
-        console.log(`${cat.name} --content ids: ${cat.contentID}`);
     }
 
     function handleCategoryToggle(categoryIndex, contentId) {
