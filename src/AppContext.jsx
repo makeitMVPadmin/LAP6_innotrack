@@ -7,30 +7,6 @@ import { fetchContent } from "./functions/fetchContent";
 import defaultPicture from "./assets/placeholder.jpg";
 import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
 
-const HARD_CODED_CATEGORIES = [
-    {
-        id: "ro7Sz05bCKdfzFaYUOx7",
-        name: "network",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentIds: [
-            "HIM6R8AbiEKBZWhkIy8Y",
-            "j9Tq3xCdLp7mRv1sFg0H",
-            "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
-        ],
-        createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
-    },
-    {
-        id: "lRqX0IFdr6u1gQXRBGa1",
-        name: "drive",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentIds: [
-            "afYzXislW1iopWhNyQF3",
-            "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
-        ],
-        createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
-    },
-];
-
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
