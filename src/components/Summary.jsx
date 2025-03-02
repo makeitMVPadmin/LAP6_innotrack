@@ -66,7 +66,7 @@ export default function Summary() {
                   </ul>
               </section>
               <div className="flex justify-end mt-[1.5rem] gap-[1rem]">
-            <a href="#"
+            <a target="_blank" href={content[currentIndex].url}
                     className="font-montserrat font-semibold text-sm/[1.57] px-3.5 py-1.5 text-[#28363F] bg-yellow-400 
     hover:bg-yellow-500 border-black border-l border-t border-r-2 
     border-b-2 rounded-lg shadow-customButton transition"
