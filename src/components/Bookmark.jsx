@@ -70,12 +70,12 @@ export default function Bookmark({ contentInfo }) {
                 <DialogTrigger asChild>
                     <img src={icon} alt="Bookmark Icon" />
                 </DialogTrigger>
-                <DialogContent className="p-0 bg-transparent border-none shadow-none top-80">
+                <DialogContent className="p-0 bg-transparent border-none shadow-none top-64">
                     <div
                         className={cn(
                             "transform transition-all duration-300 ease-in-out",
                             isDialogVisible
-                                ? "-translate-x-48"
+                                ? "-translate-x-64"
                                 : "-translate-x-[1500px]"
                         )}
                     >
@@ -125,8 +125,8 @@ export default function Bookmark({ contentInfo }) {
                                         ))}
                                     {categories && categories.length === 0 && (
                                         <p className="font-inter px-6 text-center">
-                                            You have no collections. Press New
-                                            Collection to bookmark this content
+                                            You have no collections. Click "New
+                                            Collection" to bookmark this content
                                         </p>
                                     )}
                                     {!categories && <div>Loading...</div>}
