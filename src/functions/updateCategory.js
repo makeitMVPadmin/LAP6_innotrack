@@ -123,4 +123,4 @@ async function test() {
 }
 
 export { updateCategory };
-test();
+// test();

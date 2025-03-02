@@ -6,15 +6,16 @@ async function fetchContent(contentId) {
         const contentDocRef = doc(db, "content", contentId);
         const contentSnapshot = await getDoc(contentDocRef);
 
-        if (!contentSnapshot.exists) {
-            throw new Error(`Content with ID ${contentId} not found`);
-            return {};
+        if (!contentSnapshot.exists()) {
+            console.log(`Content with ID ${contentId} not found`);
+            return null;
         }
         const content = contentSnapshot.data();
-
+        console.log(`Fetched content for ID ${contentId}: `, content);
         return content;
     } catch (error) {
-        console.log("Error fetching content: ", error);
+        console.error("Error fetching content: ", error);
+        return null;
     }
 }
 

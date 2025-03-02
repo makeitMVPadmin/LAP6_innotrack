@@ -87,4 +87,4 @@ async function test() {
 }
 
 export { createNewCategory };
-test();
+// test();

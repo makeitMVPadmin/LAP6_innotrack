@@ -3,6 +3,8 @@ import { db } from "../firebase";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { toast } from "sonner";
 import { createNewCategory } from "./functions/createNewCategory";
+import { fetchContent } from "./functions/fetchContent";
+import defaultPicture from "./assets/placeholder.jpg";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -34,6 +36,7 @@ export const AppProvider = ({ children }) => {
     const [content, setContent] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [categories, setCategories] = useState([]);
+    const [bookmarkPictures, setBookmarkPictures] = useState({});
 
     async function handleCreateNewCollection(newCategoryInfo) {
         try {
@@ -67,6 +70,10 @@ export const AppProvider = ({ children }) => {
                     2000
                 );
                 setCategories((prev) => [...prev, newCategory]);
+                // setBookmarkPictures((prev) => ({
+                //     ...prev,
+                //     [newCategory.id]: defaultPicture,
+                // }));
             }
         } catch (error) {
             console.error("Error creating collection: ", error);
@@ -116,6 +123,35 @@ export const AppProvider = ({ children }) => {
         });
     }
 
+    async function updateBookmarkPictures() {
+        const newPictures = {};
+        for (const category of categories) {
+            if (category.contentIds && category.contentIds.length > 0) {
+                const firstContentId = category.contentIds[0];
+                try {
+                    const content = await fetchContent(firstContentId);
+                    newPictures[category.id] =
+                        content.picture || defaultPicture;
+                } catch (error) {
+                    console.error(
+                        `Error fetching content for category ${category.id}: `,
+                        error
+                    );
+                    newPictures[category.id] = defaultCategoryPic;
+                }
+            } else {
+                newPictures[category.id] = defaultCategoryPic;
+            }
+        }
+        setBookmarkPictures(newPictures);
+    }
+
+    useEffect(() => {
+        if (categories.length > 0 && content.length > 0) {
+            updateBookmarkPictures();
+        }
+    }, [categories, content]);
+
     useEffect(() => {
         const fetchContent = async () => {
             const querySnapshot = await getDocs(
@@ -144,6 +180,7 @@ export const AppProvider = ({ children }) => {
                 categories,
                 handleCreateNewCollection,
                 handleCategoryToggle,
+                bookmarkPictures,
             }}
         >
             {children}
