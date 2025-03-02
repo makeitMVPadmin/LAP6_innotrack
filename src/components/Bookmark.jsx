@@ -18,7 +18,6 @@ import bookmarkIcon from "../assets/icons/bookmark.svg";
 import bookmarkFilledIcon from "../assets/icons/bookmark-filled.svg";
 import defaultCategoryPic from "../assets/placeholder.jpg";
 import { useAppContext } from "../AppContext";
-import { fetchContent } from "../functions/fetchContent.js";
 
 export default function Bookmark({ contentInfo }) {
     const [isDialogVisible, setIsDialogVisible] = useState(false);
@@ -30,7 +29,6 @@ export default function Bookmark({ contentInfo }) {
         bookmarkPictures,
     } = useAppContext();
     const [icon, setIcon] = useState(bookmarkIcon);
-    // console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
         setIsDialogVisible(false);
@@ -84,7 +82,7 @@ export default function Bookmark({ contentInfo }) {
                         <div className="w-60 h-64 px-5 py-4 bg-white rounded-xl border-black border-r-2 border-b-2 flex flex-col">
                             <DialogHeader className="p-0 mb-4">
                                 <DialogTitle className="text-lg">
-                                    Add to A Collection
+                                    Add To A Collection
                                 </DialogTitle>
                             </DialogHeader>
                             <div className="flex-1">

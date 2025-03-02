@@ -9,6 +9,7 @@ import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
 import { updateCategory } from "./functions/updateCategory";
 
 const AppContext = createContext();
+const USERID = "1uIX6OjnNQi0bSXcmxV0";
 
 export const AppProvider = ({ children }) => {
     const [content, setContent] = useState([]);
@@ -19,7 +20,7 @@ export const AppProvider = ({ children }) => {
     async function handleCreateNewCollection(newCategoryInfo) {
         try {
             let categoryInfo = {
-                userID: "1uIX6OjnNQi0bSXcmxV0",
+                userID: USERID,
                 name: newCategoryInfo.name,
                 createdAt: newCategoryInfo.createdAt,
             };
@@ -48,10 +49,6 @@ export const AppProvider = ({ children }) => {
                     2000
                 );
                 setCategories((prev) => [...prev, newCategory]);
-                // setBookmarkPictures((prev) => ({
-                //     ...prev,
-                //     [newCategory.id]: defaultPicture,
-                // }));
             }
         } catch (error) {
             console.error("Error creating collection: ", error);
@@ -88,7 +85,6 @@ export const AppProvider = ({ children }) => {
                                 contentIds: updateCategory.contentIds,
                             };
                         });
-                        //update Picture bookmark picture
                         console.log(
                             `Successfully ${
                                 isAdding ? "added to" : "removed from"
@@ -108,7 +104,7 @@ export const AppProvider = ({ children }) => {
                 })
                 .catch((error) => {
                     console.error("Error updating category:", error);
-                    //revertin optimistic ui update
+                    //reverting optimistic ui update
                     setCategories((currentCategories) => {
                         const revertedCategories = [...currentCategories];
                         revertedCategories[categoryIndex] = {
@@ -119,48 +115,6 @@ export const AppProvider = ({ children }) => {
                 });
 
             return newCategories;
-            // try {
-            //     if (category.contentIds.includes(contentId)) {
-            //         const removedCategory = await updateCategory(
-            //             category.id,
-            //             contentId,
-            //             false
-            //         );
-            //         console.log("Category rem: ", removedCategory);
-            //         category.contentIds = removedCategory.contentIds;
-            //         // category.contentIds = category.contentIds.filter(
-            //         //     (id) => id !== contentId
-            //         // );
-            //         console.log("Removed contentId: ", contentId);
-            //     } else {
-            //         console.log(`Current Cat Array: ${category.contentIds} -
-            //             Current Cat Id: ${category.id} -
-            //             Current Content Id: ${contentId}`);
-            //         const addedCategory = await updateCategory(
-            //             category.id,
-            //             contentId,
-            //             true
-            //         );
-            //         console.log("Category add: ", addedCategory);
-            //         if (addedCategory) {
-            //             const newContentIds = addedCategory.contentIds;
-            //             category.contentIds = newContentIds;
-            //             console.log("Added contentId: ", contentId);
-            //         } else {
-            //             console.log("Could not add contentId: ", contentId);
-            //             category.contentIds;
-            //         }
-            //         // category.contentIds.push(contentId);
-            //         //update
-            //     }
-
-            //     return newCategories;
-            // } catch (error) {
-            //     console.error(
-            //         `Error updating category ${category.id}: `,
-            //         error
-            //     );
-            // }
         });
     }
 
@@ -206,15 +160,14 @@ export const AppProvider = ({ children }) => {
         };
         fetchContent();
         async function fetchCategories() {
-            const userId = "1uIX6OjnNQi0bSXcmxV0";
             try {
-                const userCategories = await fetchCategoriesByUserId(userId);
+                const userCategories = await fetchCategoriesByUserId(USERID);
                 console.log("User Categories: ", userCategories);
 
                 setCategories(userCategories);
             } catch (error) {
                 console.error(
-                    `Error fetching categories for user ${userId}: `,
+                    `Error fetching categories for user ${USERID}: `,
                     error
                 );
             }
