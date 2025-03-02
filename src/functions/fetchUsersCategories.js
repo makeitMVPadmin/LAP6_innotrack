@@ -89,6 +89,6 @@ async function test() {
     }
 }
 
-test();
+//test();
 
 export { fetchUsersCategories, fetchCategoriesByUserId };

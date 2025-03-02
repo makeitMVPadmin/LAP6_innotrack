@@ -35,4 +35,4 @@ async function test() {
 }
 
 export { fetchContent };
-test();
+//test();
