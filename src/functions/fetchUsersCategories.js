@@ -1,6 +1,6 @@
 import { db } from "../../firebase";
 import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
-import fetchUsers from "./client-fetchUsers";
+import fetchUsers from "./fetchUsers";
 
 const fetchUsersCategories = async ({
     limit = null,
