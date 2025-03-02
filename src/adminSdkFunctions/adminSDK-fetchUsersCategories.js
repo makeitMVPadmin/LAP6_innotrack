@@ -70,7 +70,7 @@ const fetchUsersCategories = async ({
     }
 };
 
-const fetchCategoriesByUserId = async (userId) => {
+async function fetchCategoriesByUserId(userId) {
     try {
         const query = db.collection("categories").where("userId", "==", userId);
         const snapshot = await query.get();
@@ -85,7 +85,7 @@ const fetchCategoriesByUserId = async (userId) => {
         console.error("Error fetching categories for user ID:", userId, error);
         return [];
     }
-};
+}
 
 async function test() {
     try {
@@ -108,4 +108,4 @@ async function test() {
 
 test();
 
-export { fetchUsersCategories, fetchCategoriesByUserId };
+export default { fetchUsersCategories, fetchCategoriesByUserId };
