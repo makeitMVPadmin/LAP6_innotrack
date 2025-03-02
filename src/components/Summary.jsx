@@ -5,32 +5,36 @@ import star from "../assets/icons/star-filled.svg";
 
 export default function Summary() {
     const { content, currentIndex } = useAppContext();
+    const kpToArray = content[currentIndex]?.keyPoints.replaceAll("•", "").split(/\r?\n/);
 
-    const keyPoints = [
+    const fallBackKeyPoints = [
         "Smarter Assistants – AI-driven virtual assistants are becoming more intuitive, personalized, and responsive to user needs.",
         "Automation & Robotics – Advancements in AI-powered automation are streamlining tasks in homes, workplaces, and industries.",
         "Immersive AI Experiences – AI is enhancing entertainment, healthcare, and smart devices, creating more seamless and interactive user experiences.",
     ];
 
-  const tags = ["DEV", "DATA"];
+    const keyPoints = kpToArray?.length === 3 ? kpToArray : fallBackKeyPoints;
 
-  console.log("loaded");
+  const tags = {
+    "2TtFQsKwmR3GVa1jKmrE": "UI/UX",
+    "4LgCNSov0iP7MfxofrkK": "Data Science",
+    "4ts4f2TeDzGIl5BwIZpZ": "Cloud Computing",
+    "84vXzVFrmob3r0RHIO4o": "AI",
+    "Rdj5mCzN6aFYaoY2PxIG": "Software Development",
+    "cjXU71iNu0lj51JJUL7x": "Cybersecurity",
+    "h3BdxYdEnL0xwNF8fHoI": "Web Development"
+  };
 
     return (
         <>
       {content.length ? <section className="px-fluidx py-fluidy min-w-lg max-w-[100.5625rem] mx-[1.5rem] md:mx-fluid 3xl:mx-auto mt-[1.25rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
               <h2 className="font-fraunces flex gap-fluid items-center text-fluidh2 font-semibold mb-1 tracking-normal">
                   Summary
-                  {tags.map((tag, index) => {
-                      return (
-                          <span
-                              key={index}
-                              className="px-2.5 py-0.5 text-white rounded-full font-normal bg-[#0264D4] h-fit font-montserrat text-xs"
-                          >
-                              {tag}
-                          </span>
-                      );
-                  })}
+                    <span
+                        className="px-2.5 py-0.5 text-white rounded-full font-normal bg-[#0264D4] h-fit font-montserrat text-xs"
+                        >
+                        {tags[content[currentIndex].techAreaId]}
+                    </span>
               </h2>
               <p
                   key={currentIndex}
@@ -54,7 +58,7 @@ export default function Summary() {
                                       key={`${index}${currentIndex}`}
                                       className="animate-fadeInOut"
                                   >
-                                      {keyPoint}
+                                      {keyPoint.trim()}
                                   </span>
                               </li>
                           );
