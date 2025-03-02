@@ -37,6 +37,7 @@ async function createNewCategory(categoryInfo) {
 
         //create the category object
         const newCategory = {
+            id: categoryRef.id,
             contentIds: [],
             createdAt: formatDate(categoryInfo.createdAt),
             name: categoryInfo.name,
@@ -87,4 +88,4 @@ async function test() {
 }
 
 export { createNewCategory };
-test();
+// test();
