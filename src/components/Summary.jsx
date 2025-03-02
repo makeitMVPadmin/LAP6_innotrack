@@ -18,7 +18,7 @@ export default function Summary() {
 
     return (
         <>
-      {content.length ? <section className="px-[5rem] py-[2rem] min-w-3xl md:mx-fluid mt-[1.25rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
+      {content.length ? <section className="px-[5rem] py-[2rem] min-w-3xl max-w-[100.5625rem] md:mx-fluid 3xl:mx-auto mt-[1.25rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
               <h2 className="font-fraunces flex gap-4 items-center text-2xl font-semibold mb-1 tracking-normal">
                   Summary
                   {tags.map((tag, index) => {

@@ -13,6 +13,9 @@ module.exports = {
         spacing: {
             fluid: "clamp(0rem, -24rem + 50vw, 3.75rem)"
         },
+        screens: {
+            "3xl": "107.25rem"
+        },
 		content: {
 			listStar: "url('./src/assets/icons/star-filled.svg')"
 		},
