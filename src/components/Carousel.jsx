@@ -55,7 +55,7 @@ const CustomCarousel = () => {
           ))
         ) : (
           <CarouselItem>
-            <Skeleton className="rounded-[7.869px] border-t-[0.997px] border-r-[1.994px] border-b-[1.994px] border-l-[0.997px] border-[#182127] shadow-[0px_0.997px_1.994px_0px_rgba(0,0,0,0.05) overflow-hidden h-[30.5rem]" />
+            <Skeleton className="rounded-[7.869px] border-t-[0.997px] border-r-[1.994px] border-b-[1.994px] border-l-[0.997px] border-[#182127] shadow-[0px_0.997px_1.994px_0px_rgba(0,0,0,0.05) overflow-hidden h-[23.375rem]" />
           </CarouselItem>
         )}
       </CarouselContent>
