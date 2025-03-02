@@ -66,21 +66,21 @@ async function test() {
         const newCat = await createNewCategory(testCategoryInfo);
 
         //fetch all categories to verify creation
-        // const userCategories = await fetchCategoriesByUserId(testUserId);
+        const userCategories = await fetchCategoriesByUserId(testUserId);
 
         //verify that new category is in results
-        // const foundCategory = userCategories.find(
-        //     (cat) => cat.id === newCat.id
-        // );
-        // if (foundCategory) {
-        //     console.log(
-        //         "Test passed: Category was successfully created and retrieved"
-        //     );
-        // } else {
-        //     console.log(
-        //         "Test failed: Created category was not found in database"
-        //     );
-        // }
+        const foundCategory = userCategories.find(
+            (cat) => cat.id === newCat.id
+        );
+        if (foundCategory) {
+            console.log(
+                "Test passed: Category was successfully created and retrieved"
+            );
+        } else {
+            console.log(
+                "Test failed: Created category was not found in database"
+            );
+        }
     } catch (error) {
         console.error("Test failed with error:", error);
     }
