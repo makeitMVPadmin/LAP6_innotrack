@@ -6,6 +6,7 @@ import { createNewCategory } from "./functions/createNewCategory";
 import { fetchContent } from "./functions/fetchContent";
 import defaultPicture from "./assets/placeholder.jpg";
 import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
+import { updateCategory } from "./functions/updateCategory";
 
 const AppContext = createContext();
 
@@ -62,41 +63,104 @@ export const AppProvider = ({ children }) => {
     }
 
     function handleCategoryToggle(categoryIndex, contentId) {
-        /*
-      if selectedCategories.includes(categoryId)
-          then it was already checked so uncheck it now...
-          -remove contentId from category.contentID...use array filter 
-          -UPDATE category collection in DB using categoryId
-          -if DB update successful, display confimation message
-              -else display error message
-      else
-          it was unchecked so check it
-          -add contentId to category.contentID array
-          -update category collection in db 
-          -if DB update successful, display confimation method
-              -else display error message
-
-       */
-
-        setCategories((prev) => {
-            const newCategories = prev.map((cat) => ({
-                ...cat,
-                contentIds: [...(cat.contentIds || [])],
-            }));
-
+        setCategories((prevCategories) => {
+            const newCategories = [...prevCategories];
             const category = newCategories[categoryIndex];
+            const isAdding = !category.contentIds.includes(contentId);
 
-            if (category.contentIds.includes(contentId)) {
+            //optimistic update of the UI
+            if (isAdding) {
+                category.contentIds = [...category.contentIds, contentId];
+            } else {
                 category.contentIds = category.contentIds.filter(
                     (id) => id !== contentId
                 );
-                console.log("Removed contentId: ", contentId);
-            } else {
-                category.contentIds.push(contentId);
-                console.log("Added contentId: ", contentId);
             }
 
+            //DB update
+            updateCategory(category.id, contentId, isAdding)
+                .then((updatedCategory) => {
+                    if (updatedCategory) {
+                        setCategories((currentCategories) => {
+                            const updatedCategories = [...currentCategories];
+                            updatedCategories[categoryIndex] = {
+                                ...updatedCategories[categoryIndex],
+                                contentIds: updateCategory.contentIds,
+                            };
+                        });
+                        //update Picture bookmark picture
+                        console.log(
+                            `Successfully ${
+                                isAdding ? "added to" : "removed from"
+                            } category`
+                        );
+                    } else {
+                        //DB update failed somehow so revert the optimistic update
+                        setCategories((currentCategories) => {
+                            const revertedCategories = [...currentCategories];
+                            revertedCategories[categoryIndex] = {
+                                ...prevCategories[categoryIndex],
+                            };
+                            return revertedCategories;
+                        });
+                        console.error("Failed to update category");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating category:", error);
+                    //revertin optimistic ui update
+                    setCategories((currentCategories) => {
+                        const revertedCategories = [...currentCategories];
+                        revertedCategories[categoryIndex] = {
+                            ...prevCategories[categoryIndex],
+                        };
+                        return revertedCategories;
+                    });
+                });
+
             return newCategories;
+            // try {
+            //     if (category.contentIds.includes(contentId)) {
+            //         const removedCategory = await updateCategory(
+            //             category.id,
+            //             contentId,
+            //             false
+            //         );
+            //         console.log("Category rem: ", removedCategory);
+            //         category.contentIds = removedCategory.contentIds;
+            //         // category.contentIds = category.contentIds.filter(
+            //         //     (id) => id !== contentId
+            //         // );
+            //         console.log("Removed contentId: ", contentId);
+            //     } else {
+            //         console.log(`Current Cat Array: ${category.contentIds} -
+            //             Current Cat Id: ${category.id} -
+            //             Current Content Id: ${contentId}`);
+            //         const addedCategory = await updateCategory(
+            //             category.id,
+            //             contentId,
+            //             true
+            //         );
+            //         console.log("Category add: ", addedCategory);
+            //         if (addedCategory) {
+            //             const newContentIds = addedCategory.contentIds;
+            //             category.contentIds = newContentIds;
+            //             console.log("Added contentId: ", contentId);
+            //         } else {
+            //             console.log("Could not add contentId: ", contentId);
+            //             category.contentIds;
+            //         }
+            //         // category.contentIds.push(contentId);
+            //         //update
+            //     }
+
+            //     return newCategories;
+            // } catch (error) {
+            //     console.error(
+            //         `Error updating category ${category.id}: `,
+            //         error
+            //     );
+            // }
         });
     }
 

@@ -90,7 +90,7 @@ export default function Bookmark({ contentInfo }) {
                             <div className="flex-1">
                                 <ScrollArea className="h-36 py-2">
                                     {categories &&
-                                        categories?.map((category, index) => (
+                                        categories.map((category, index) => (
                                             <div
                                                 key={category.id}
                                                 className="flex items-center space-x-2 mb-2"
@@ -128,6 +128,12 @@ export default function Bookmark({ contentInfo }) {
                                                 </label>
                                             </div>
                                         ))}
+                                    {categories && categories.length === 0 && (
+                                        <p className="font-inter px-6 text-center">
+                                            You have no collections. Press New
+                                            Collection to bookmark this content
+                                        </p>
+                                    )}
                                     {!categories && <div>Loading...</div>}
                                 </ScrollArea>
                             </div>
