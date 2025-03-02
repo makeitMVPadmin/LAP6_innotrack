@@ -56,8 +56,8 @@ export default function Bookmark({ contentInfo }) {
         }
 
         categories.forEach((category) => {
-            if (category.contentID.length >= 1) {
-                const contentId = category.contentID[0];
+            if (category.contentIds.length >= 1) {
+                const contentId = category.contentIds[0];
                 const content = fetchContent(contentId);
                 const isEmpty = (obj) => Object.keys(obj).length === 0;
                 if (isEmpty(content)) {
