@@ -30,8 +30,7 @@ export default function Bookmark({ contentInfo }) {
         bookmarkPictures,
     } = useAppContext();
     const [icon, setIcon] = useState(bookmarkIcon);
-    // const [picture, setPicture] = useState(collectionPic);
-    console.log(`content Id being looked at: ${contentInfo.id}`);
+    // console.log(`content Id being looked at: ${contentInfo.id}`);
 
     function handleCloseDialog() {
         setIsDialogVisible(false);
@@ -53,26 +52,11 @@ export default function Bookmark({ contentInfo }) {
         const filled = (category) =>
             Array.isArray(category.contentIds) &&
             category.contentIds.includes(contentInfo.id);
-        if (categories.some(filled)) {
+        if (categories?.some(filled)) {
             setIcon(bookmarkFilledIcon);
         } else {
             setIcon(bookmarkIcon);
         }
-
-        // categories.forEach(async (category) => {
-        //     if (category.contentIds.length >= 1) {
-        //         const contentId = category.contentIds[0];
-        //         const content = await fetchContent(contentId);
-
-        //         const isEmpty = (obj) =>
-        //             !obj ? true : Object.keys(obj).length === 0;
-        //         if (isEmpty(content)) {
-        //             setPicture(collectionPic);
-        //         } else {
-        //             setPicture(content.picture);
-        //         }
-        //     }
-        // });
     });
 
     return (
@@ -105,41 +89,46 @@ export default function Bookmark({ contentInfo }) {
                             </DialogHeader>
                             <div className="flex-1">
                                 <ScrollArea className="h-36 py-2">
-                                    {categories.map((category, index) => (
-                                        <div
-                                            key={category.id}
-                                            className="flex items-center space-x-2 mb-2"
-                                        >
-                                            <img
-                                                src={
-                                                    bookmarkPictures[
-                                                        category.id
-                                                    ] || defaultCategoryPic
-                                                }
-                                                alt="bookmark collection picture"
-                                                className="w-8 h-8 rounded mr-2"
-                                            />
-                                            <Checkbox
-                                                id={`category-${category.id}`}
-                                                checked={category.contentIds?.includes(
-                                                    contentInfo.id
-                                                )}
-                                                onCheckedChange={() =>
-                                                    handleCategoryToggle(
-                                                        index,
-                                                        contentInfo.id
-                                                    )
-                                                }
-                                                className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
-                                            />
-                                            <label
-                                                htmlFor={`category-${category.id}`}
-                                                className="text-md font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    {categories &&
+                                        categories?.map((category, index) => (
+                                            <div
+                                                key={category.id}
+                                                className="flex items-center space-x-2 mb-2"
                                             >
-                                                {category.name}
-                                            </label>
-                                        </div>
-                                    ))}
+                                                <img
+                                                    key={category.id}
+                                                    src={
+                                                        bookmarkPictures[
+                                                            category.id
+                                                        ] || defaultCategoryPic
+                                                    }
+                                                    alt="bookmark collection picture"
+                                                    className="w-8 h-8 rounded mr-2"
+                                                />
+                                                <Checkbox
+                                                    key={category.id}
+                                                    id={`category-${category.id}`}
+                                                    checked={category.contentIds?.includes(
+                                                        contentInfo.id
+                                                    )}
+                                                    onCheckedChange={() =>
+                                                        handleCategoryToggle(
+                                                            index,
+                                                            contentInfo.id
+                                                        )
+                                                    }
+                                                    className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
+                                                />
+                                                <label
+                                                    key={category.id}
+                                                    htmlFor={`category-${category.id}`}
+                                                    className="text-md font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                >
+                                                    {category.name}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    {!categories && <div>Loading...</div>}
                                 </ScrollArea>
                             </div>
                             <DialogFooter className="p-0 sm:justify-between">

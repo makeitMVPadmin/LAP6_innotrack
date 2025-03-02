@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { createNewCategory } from "./functions/createNewCategory";
 import { fetchContent } from "./functions/fetchContent";
 import defaultPicture from "./assets/placeholder.jpg";
+import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
 
 const HARD_CODED_CATEGORIES = [
     {
@@ -137,17 +138,17 @@ export const AppProvider = ({ children }) => {
                         `Error fetching content for category ${category.id}: `,
                         error
                     );
-                    newPictures[category.id] = defaultCategoryPic;
+                    newPictures[category.id] = defaultPicture;
                 }
             } else {
-                newPictures[category.id] = defaultCategoryPic;
+                newPictures[category.id] = defaultPicture;
             }
         }
         setBookmarkPictures(newPictures);
     }
 
     useEffect(() => {
-        if (categories.length > 0 && content.length > 0) {
+        if (categories?.length > 0 && content.length > 0) {
             updateBookmarkPictures();
         }
     }, [categories, content]);
@@ -164,11 +165,21 @@ export const AppProvider = ({ children }) => {
             setContent(contentData);
         };
         fetchContent();
-        /**Add code here to fetch Categories from DB by doing:
-         * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
-         * result from the function should give back an array
-         */
-        setCategories(HARD_CODED_CATEGORIES);
+        async function fetchCategories() {
+            const userId = "1uIX6OjnNQi0bSXcmxV0";
+            try {
+                const userCategories = await fetchCategoriesByUserId(userId);
+                console.log("User Categories: ", userCategories);
+
+                setCategories(userCategories);
+            } catch (error) {
+                console.error(
+                    `Error fetching categories for user ${userId}: `,
+                    error
+                );
+            }
+        }
+        fetchCategories();
     }, []);
 
     return (
