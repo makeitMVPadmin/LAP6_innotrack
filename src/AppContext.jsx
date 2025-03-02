@@ -2,13 +2,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { toast } from "sonner";
+import { createNewCategory } from "./functions/createNewCategory";
 
 const HARD_CODED_CATEGORIES = [
     {
         id: "ro7Sz05bCKdfzFaYUOx7",
         name: "network",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: [
+        contentIds: [
             "HIM6R8AbiEKBZWhkIy8Y",
             "j9Tq3xCdLp7mRv1sFg0H",
             "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
@@ -19,7 +20,7 @@ const HARD_CODED_CATEGORIES = [
         id: "lRqX0IFdr6u1gQXRBGa1",
         name: "drive",
         userID: "dNC63cyuDbEoEntxBpe9",
-        contentID: [
+        contentIds: [
             "afYzXislW1iopWhNyQF3",
             "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
         ],
@@ -34,59 +35,46 @@ export const AppProvider = ({ children }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [categories, setCategories] = useState([]);
 
-    function handleCreateNewCollection(newCategoryInfo) {
-        /*
-    -use contentId prop to create newCategory object
-        -const {name, createdAt} = newCategoryInfo
-        -create a random category Id that look like ids in DB
-        -format createdAt date to look like data in DB**
-        -where to get userID????
+    async function handleCreateNewCollection(newCategoryInfo) {
+        try {
+            let categoryInfo = {
+                userID: "1uIX6OjnNQi0bSXcmxV0",
+                name: newCategoryInfo.name,
+                createdAt: newCategoryInfo.createdAt,
+            };
+            const newCategory = await createNewCategory(categoryInfo);
+            const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-    -what about the icon picture? logic for how to get it?
-    
-    -setCategories
-    -display confirmation message (inside NewCollectionPopup dialog, before removing visiability)
-    -POST To firestore DB
-    
-     */
-        let newCategory = {
-            id: Date.now(),
-            userID: "dNC63cyuDbEoEntxBpe9",
-            contentID: [],
-            ...newCategoryInfo,
-        };
-        console.log(newCategory);
-        //post to DB successfull
-        if (true) {
-            setTimeout(
-                () =>
-                    toast.success("Collection Added", {
-                        duration: 2000,
-                        position: "top-left",
-                    }),
-                2000
-            );
-
-            setCategories((prev) => [...prev, newCategory]);
-        } else {
-            //post to DB not successfull
-            setTimeout(
-                () =>
-                    toast.error(
-                        "Cannot reach database, unable to add Collection",
-                        {
+            if (isEmpty(newCategory)) {
+                //post to DB not successfull
+                setTimeout(
+                    () =>
+                        toast.error("Unable to add Collection", {
                             duration: 2000,
                             position: "top-left",
-                        }
-                    ),
-                2000
-            );
-            setCategories((prev) => [...prev]);
+                        }),
+                    2000
+                );
+                setCategories((prev) => [...prev]);
+            } else {
+                //post to DB successfull
+                setTimeout(
+                    () =>
+                        toast.success("Collection Added", {
+                            duration: 2000,
+                            position: "top-left",
+                        }),
+                    2000
+                );
+                setCategories((prev) => [...prev, newCategory]);
+            }
+        } catch (error) {
+            console.error("Error creating collection: ", error);
+            toast.error("Unable to add Collection", {
+                duration: 2000,
+                position: "top-left",
+            });
         }
-    }
-
-    for (let cat of categories) {
-        console.log(`${cat.name} --content ids: ${cat.contentID}`);
     }
 
     function handleCategoryToggle(categoryIndex, contentId) {
@@ -105,15 +93,27 @@ export const AppProvider = ({ children }) => {
               -else display error message
 
        */
-        const newCategories = [...categories];
-        const indexOfID = newCategories[categoryIndex].contentID.findIndex(
-            (id) => id === contentId
-        );
-        indexOfID !== -1
-            ? newCategories[categoryIndex].contentID.splice(indexOfID, 1)
-            : newCategories[categoryIndex].contentID.push(contentId);
 
-        setCategories(newCategories);
+        setCategories((prev) => {
+            const newCategories = prev.map((cat) => ({
+                ...cat,
+                contentIds: [...(cat.contentIds || [])],
+            }));
+
+            const category = newCategories[categoryIndex];
+
+            if (category.contentIds.includes(contentId)) {
+                category.contentIds = category.contentIds.filter(
+                    (id) => id !== contentId
+                );
+                console.log("Removed contentId: ", contentId);
+            } else {
+                category.contentIds.push(contentId);
+                console.log("Added contentId: ", contentId);
+            }
+
+            return newCategories;
+        });
     }
 
     useEffect(() => {

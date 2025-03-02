@@ -47,7 +47,8 @@ export default function Bookmark({ contentInfo }) {
 
     useEffect(() => {
         const filled = (category) =>
-            category.contentID.includes(contentInfo.id);
+            Array.isArray(category.contentIds) &&
+            category.contentIds.includes(contentInfo.id);
         if (categories.some(filled)) {
             setIcon(bookmarkFilledIcon);
         } else {
@@ -55,8 +56,8 @@ export default function Bookmark({ contentInfo }) {
         }
 
         categories.forEach((category) => {
-            if (category.contentID.length >= 1) {
-                const contentId = category.contentID[0];
+            if (category.contentIds.length >= 1) {
+                const contentId = category.contentIds[0];
                 const content = fetchContent(contentId);
                 const isEmpty = (obj) => Object.keys(obj).length === 0;
                 if (isEmpty(content)) {
@@ -110,7 +111,7 @@ export default function Bookmark({ contentInfo }) {
                                             />
                                             <Checkbox
                                                 id={`category-${category.id}`}
-                                                checked={category.contentID.includes(
+                                                checked={category.contentIds?.includes(
                                                     contentInfo.id
                                                 )}
                                                 onCheckedChange={() =>
