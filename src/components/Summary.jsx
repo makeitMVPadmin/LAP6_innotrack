@@ -71,7 +71,7 @@ export default function Summary() {
                   </a>
                 <Bookmark contentInfo={content[currentIndex] ?? { id: "" }} />
             </div>
-        </section> : <Skeleton  className="mx-[1rem] mt-[1.25rem] rounded-xl border border-black border-solid border-r-2 border-b-2 h-[21.1875rem]"/>}
+        </section> : <Skeleton  className="px-fluidx py-fluidy min-w-lg max-w-[100.5625rem] mx-[1.5rem] md:mx-fluid 3xl:mx-auto mt-[1.25rem] rounded-xl border border-black border-solid border-r-2 border-b-2 h-[31.5rem]"/>}
     </>
     );
 }
