@@ -10,6 +10,9 @@ module.exports = {
 			inter: ["Inter", "sans-serif"]
 
 		},
+        spacing: {
+            fluid: "clamp(0rem, -24rem + 50vw, 3.75rem)"
+        },
 		content: {
 			listStar: "url('./src/assets/icons/star-filled.svg')"
 		},
