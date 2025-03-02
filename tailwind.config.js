@@ -10,8 +10,18 @@ module.exports = {
 			inter: ["Inter", "sans-serif"]
 
 		},
+        fontSize: {
+            fluidh2: "clamp(1.25rem, 0.896rem + 1.509vw, 1.5rem)",
+            fluidp: "clamp(0.875rem, 0.698rem + 0.755vw, 1rem)"
+        },
         spacing: {
-            fluid: "clamp(0rem, -24rem + 50vw, 3.75rem)"
+            fluid: "clamp(1.5rem, -24rem + 50vw, 3.75rem)",
+            fluidy: "clamp(1rem, -0.415rem + 6.038vw, 2rem)",
+            fluidx: "clamp(1rem, -4.66rem + 24.151vw, 5rem)",
+            fluidgap: "clamp(0.5rem, -0.208rem + 3.019vw, 1rem)"
+        },
+        gap: {
+            fluid: "clamp(0.5rem, -0.208rem + 3.019vw, 1rem)"
         },
         screens: {
             "3xl": "107.25rem"

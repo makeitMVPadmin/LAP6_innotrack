@@ -18,8 +18,8 @@ export default function Summary() {
 
     return (
         <>
-      {content.length ? <section className="px-[5rem] py-[2rem] min-w-3xl max-w-[100.5625rem] md:mx-fluid 3xl:mx-auto mt-[1.25rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
-              <h2 className="font-fraunces flex gap-4 items-center text-2xl font-semibold mb-1 tracking-normal">
+      {content.length ? <section className="px-fluidx py-fluidy min-w-lg max-w-[100.5625rem] mx-[1.5rem] md:mx-fluid 3xl:mx-auto mt-[1.25rem] bg-[#F6FAFD] rounded-xl border border-black border-solid border-r-2 border-b-2">
+              <h2 className="font-fraunces flex gap-fluid items-center text-fluidh2 font-semibold mb-1 tracking-normal">
                   Summary
                   {tags.map((tag, index) => {
                       return (
@@ -34,12 +34,12 @@ export default function Summary() {
               </h2>
               <p
                   key={currentIndex}
-                  className="animate-fadeInOut font-montserrat text-base/[1.5] font-normal text-black mt-[1.25rem]"
+                  className="animate-fadeInOut font-montserrat text-fluidp/[1.5] font-normal text-black mt-[1.25rem]"
               >
                   {content.length && content[currentIndex].summary}
               </p>
               <section className="text-end pt-[1.25rem]">
-                  <h2 className="font-fraunces flex gap-2 text-2xl font-semibold mb-1">
+                  <h2 className="font-fraunces flex gap-2 text-fluidh2 font-semibold mb-1">
                       Key Points
                   </h2>
                   <ul className="mt-3">
@@ -47,9 +47,9 @@ export default function Summary() {
                           return (
                               <li
                                   key={index}
-                                  className="flex gap-5 font-montserrat text-base/[1.5] mt-6 text-start"
+                                  className="flex gap-5 font-montserrat text-sm sm:text-base/[1.5] mt-6 text-start"
                               >
-                                <span><img src={star} alt="" /></span>
+                                <span className="block h-[22px] w-[22px]"><img className="block h-[22px] w-[22px]" height={22} width={22} src={star} alt="" /></span>
                                   <span
                                       key={`${index}${currentIndex}`}
                                       className="animate-fadeInOut"
