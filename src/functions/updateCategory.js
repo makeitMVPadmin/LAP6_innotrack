@@ -11,8 +11,8 @@ async function updateCategory(categoryId, contentId, isAdding) {
     try {
         //validate input
         if (!categoryId || !contentId) {
-            throw new Error("categoryId and contentId are required");
-            return {};
+            console.log("categoryId and contentId are required");
+            return null;
         }
 
         //get a reference to the category using the id
@@ -22,8 +22,8 @@ async function updateCategory(categoryId, contentId, isAdding) {
         const categoryDoc = await getDoc(categoryDocRef);
         //verify that category with categoryid exists in DB
         if (!categoryDoc.exists()) {
-            throw new Error(`Category with ID ${categoryId} not found`);
-            return {};
+            console.log(`Category with ID ${categoryId} not found`);
+            return null;
         }
 
         await updateDoc(categoryDocRef, {
@@ -53,8 +53,7 @@ async function updateCategory(categoryId, contentId, isAdding) {
         return formatedUpdatedCategory;
     } catch (error) {
         console.error("Error updating category content: ", error);
-        throw error;
-        return {};
+        return null;
     }
 }
 
@@ -123,4 +122,4 @@ async function test() {
 }
 
 export { updateCategory };
-//test();
+// test();

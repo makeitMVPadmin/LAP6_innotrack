@@ -3,42 +3,24 @@ import { db } from "../firebase";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { toast } from "sonner";
 import { createNewCategory } from "./functions/createNewCategory";
-
-const HARD_CODED_CATEGORIES = [
-    {
-        id: "ro7Sz05bCKdfzFaYUOx7",
-        name: "network",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentIds: [
-            "HIM6R8AbiEKBZWhkIy8Y",
-            "j9Tq3xCdLp7mRv1sFg0H",
-            "0c4a01729ebdc11d608865176acd925ce0625353fa6c60982c284e16bd4eefb9",
-        ],
-        createdAt: "July 3, 2024 at 1:55:50 AM UTC-4",
-    },
-    {
-        id: "lRqX0IFdr6u1gQXRBGa1",
-        name: "drive",
-        userID: "dNC63cyuDbEoEntxBpe9",
-        contentIds: [
-            "afYzXislW1iopWhNyQF3",
-            "07cfdd3433077bf9e3b11b15a41e1535c0609342b731a59f573044905b2997d0",
-        ],
-        createdAt: "March 6, 2024 at 12:32:25 AM UTC-5",
-    },
-];
+import { fetchContent } from "./functions/fetchContent";
+import defaultPicture from "./assets/placeholder.jpg";
+import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
+import { updateCategory } from "./functions/updateCategory";
 
 const AppContext = createContext();
+const USERID = "ZioBxBm4GBhHBn392wma";
 
 export const AppProvider = ({ children }) => {
     const [content, setContent] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [categories, setCategories] = useState([]);
+    const [bookmarkPictures, setBookmarkPictures] = useState({});
 
     async function handleCreateNewCollection(newCategoryInfo) {
         try {
             let categoryInfo = {
-                userID: "1uIX6OjnNQi0bSXcmxV0",
+                userID: USERID,
                 name: newCategoryInfo.name,
                 createdAt: newCategoryInfo.createdAt,
             };
@@ -78,43 +60,92 @@ export const AppProvider = ({ children }) => {
     }
 
     function handleCategoryToggle(categoryIndex, contentId) {
-        /*
-      if selectedCategories.includes(categoryId)
-          then it was already checked so uncheck it now...
-          -remove contentId from category.contentID...use array filter 
-          -UPDATE category collection in DB using categoryId
-          -if DB update successful, display confimation message
-              -else display error message
-      else
-          it was unchecked so check it
-          -add contentId to category.contentID array
-          -update category collection in db 
-          -if DB update successful, display confimation method
-              -else display error message
-
-       */
-
-        setCategories((prev) => {
-            const newCategories = prev.map((cat) => ({
-                ...cat,
-                contentIds: [...(cat.contentIds || [])],
-            }));
-
+        setCategories((prevCategories) => {
+            const newCategories = [...prevCategories];
             const category = newCategories[categoryIndex];
+            const isAdding = !category.contentIds.includes(contentId);
 
-            if (category.contentIds.includes(contentId)) {
+            //optimistic update of the UI
+            if (isAdding) {
+                category.contentIds = [...category.contentIds, contentId];
+            } else {
                 category.contentIds = category.contentIds.filter(
                     (id) => id !== contentId
                 );
-                console.log("Removed contentId: ", contentId);
-            } else {
-                category.contentIds.push(contentId);
-                console.log("Added contentId: ", contentId);
             }
+
+            //DB update
+            updateCategory(category.id, contentId, isAdding)
+                .then((updatedCategory) => {
+                    if (updatedCategory) {
+                        setCategories((currentCategories) => {
+                            const updatedCategories = [...currentCategories];
+                            updatedCategories[categoryIndex] = {
+                                ...updatedCategories[categoryIndex],
+                                contentIds: updateCategory.contentIds,
+                            };
+                        });
+                        console.log(
+                            `Successfully ${
+                                isAdding ? "added to" : "removed from"
+                            } category`
+                        );
+                    } else {
+                        //DB update failed somehow so revert the optimistic update
+                        setCategories((currentCategories) => {
+                            const revertedCategories = [...currentCategories];
+                            revertedCategories[categoryIndex] = {
+                                ...prevCategories[categoryIndex],
+                            };
+                            return revertedCategories;
+                        });
+                        console.error("Failed to update category");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating category:", error);
+                    //reverting optimistic ui update
+                    setCategories((currentCategories) => {
+                        const revertedCategories = [...currentCategories];
+                        revertedCategories[categoryIndex] = {
+                            ...prevCategories[categoryIndex],
+                        };
+                        return revertedCategories;
+                    });
+                });
 
             return newCategories;
         });
     }
+
+    async function updateBookmarkPictures() {
+        const newPictures = {};
+        for (const category of categories) {
+            if (category.contentIds && category.contentIds.length > 0) {
+                const firstContentId = category.contentIds[0];
+                try {
+                    const content = await fetchContent(firstContentId);
+                    newPictures[category.id] =
+                        content.picture || defaultPicture;
+                } catch (error) {
+                    console.error(
+                        `Error fetching content for category ${category.id}: `,
+                        error
+                    );
+                    newPictures[category.id] = defaultPicture;
+                }
+            } else {
+                newPictures[category.id] = defaultPicture;
+            }
+        }
+        setBookmarkPictures(newPictures);
+    }
+
+    useEffect(() => {
+        if (categories?.length > 0 && content.length > 0) {
+            updateBookmarkPictures();
+        }
+    }, [categories, content]);
 
     useEffect(() => {
         const fetchContent = async () => {
@@ -128,11 +159,20 @@ export const AppProvider = ({ children }) => {
             setContent(contentData);
         };
         fetchContent();
-        /**Add code here to fetch Categories from DB by doing:
-         * import {fetchUsersCategories, fetchCategoriesByUserId} from ../functions
-         * result from the function should give back an array
-         */
-        setCategories(HARD_CODED_CATEGORIES);
+        async function fetchCategories() {
+            try {
+                const userCategories = await fetchCategoriesByUserId(USERID);
+                console.log("User Categories: ", userCategories);
+
+                setCategories(userCategories);
+            } catch (error) {
+                console.error(
+                    `Error fetching categories for user ${USERID}: `,
+                    error
+                );
+            }
+        }
+        fetchCategories();
     }, []);
 
     return (
@@ -144,6 +184,7 @@ export const AppProvider = ({ children }) => {
                 categories,
                 handleCreateNewCollection,
                 handleCategoryToggle,
+                bookmarkPictures,
             }}
         >
             {children}
