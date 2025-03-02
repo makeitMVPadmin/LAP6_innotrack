@@ -9,7 +9,7 @@ import { fetchCategoriesByUserId } from "./functions/fetchUsersCategories";
 import { updateCategory } from "./functions/updateCategory";
 
 const AppContext = createContext();
-const USERID = "1uIX6OjnNQi0bSXcmxV0";
+const USERID = "ZioBxBm4GBhHBn392wma";
 
 export const AppProvider = ({ children }) => {
     const [content, setContent] = useState([]);

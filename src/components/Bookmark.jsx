@@ -94,7 +94,6 @@ export default function Bookmark({ contentInfo }) {
                                                 className="flex items-center space-x-2 mb-2"
                                             >
                                                 <img
-                                                    key={category.id}
                                                     src={
                                                         bookmarkPictures[
                                                             category.id
@@ -104,7 +103,6 @@ export default function Bookmark({ contentInfo }) {
                                                     className="w-8 h-8 rounded mr-2"
                                                 />
                                                 <Checkbox
-                                                    key={category.id}
                                                     id={`category-${category.id}`}
                                                     checked={category.contentIds?.includes(
                                                         contentInfo.id
@@ -118,7 +116,6 @@ export default function Bookmark({ contentInfo }) {
                                                     className="border-[#546672] peer data-[state=checked]:bg-[#0264D4]"
                                                 />
                                                 <label
-                                                    key={category.id}
                                                     htmlFor={`category-${category.id}`}
                                                     className="text-md font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                 >
