@@ -10,7 +10,7 @@ function Header() {
       <img
         src={Logo}
         alt="Logo"
-        className="flex w-[240px] justify-center items-center flex-shrink-0"
+        className="flex w-[240px] justify-center items-center flex-shrink-0 mt-[0.5rem]"
       />
       <div className="flex items-center space-x-10">
         <div className="flex items-center space-x-4">
