@@ -7,8 +7,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-// import Bookmark from "./Bookmark";
-// import { Button } from "@/components/ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 const CustomCarousel = () => {
@@ -25,8 +23,6 @@ const CustomCarousel = () => {
       setCurrentIndex(api.selectedScrollSnap());
     });
   }, [api]);
-
-  // if (content.length === 0) return <p>Loading...</p>;
 
   return (
     <Carousel
@@ -53,14 +49,6 @@ const CustomCarousel = () => {
                   <p className="text-base sm:text-lg pt-2 pb-1">
                     {item.publisher}
                   </p>
-
-                  {/* <Button
-                    className="absolute bottom-[-0.625rem] right-1 text-[#28363F] bg-yellow-400 
-    hover:bg-yellow-500 border-black border-l border-t border-r-2 
-    border-b-2 rounded-lg shadow-customButton transition"
-                  >
-                    Read More
-                  </Button> */}
                 </div>
               </div>
             </CarouselItem>
