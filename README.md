@@ -131,21 +131,34 @@ VITE_AUTH_DOMAIN=your_auth_domain
 VITE_CONTENT_API=your_content_api
 ```
 
-## 🤝 Contributing
+## 🤝 Contributors
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+### Designers
+- <a href="https://www.linkedin.com/in/mjsotillo/">Maria Jose Sotillo</a>
+- <a href="https://www.linkedin.com/in/nicuxdesigner/">Nicole Calvo</a>
+  
+### Developers
+- <a href="https://www.linkedin.com/in/darylwanji/">Daryl Wanji</a>
+- <a href="https://www.linkedin.com/in/dbslapitan/">Dirk Brandon Lapitan</a>
+- <a href="https://www.linkedin.com/in/nyajal-wal/">Nyajal Wal</a>
+- <a href="https://www.linkedin.com/in/placidakat/">Placid Akat</a>
+- <a href="https://www.linkedin.com/in/elizabethmerylsnyder/">Elizabeth Snyder</a>
+- <a href="https://www.linkedin.com/in/huanli1008/">Huan Li</a>
+  
+### Project Manager
+- <a href="https://www.linkedin.com/in/timothy-wallace-dev/">Tim Wallace</a>
+  
+### Team Lead
+- <a href="https://www.linkedin.com/in/hilarykhc/">Hilary Chen</a>
 
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Screenshots 
 
 ## 🙏 Acknowledgments
 
 - All contributors and reviewers
 - Content partners and API providers
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
