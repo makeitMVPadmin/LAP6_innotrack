@@ -155,6 +155,14 @@ VITE_CONTENT_API=your_content_api
 ![FireShot Capture 021 - Innotrack -  innotrack web app](https://github.com/user-attachments/assets/267f85ce-e181-483c-99e0-7f68fb2880bd)
 ![FireShot Capture 022 - Innotrack -  innotrack web app](https://github.com/user-attachments/assets/569ccbfc-a806-42e2-8bf8-261a6c11ba5f)
 
+<div>
+    <a href="https://www.loom.com/share/a03c655719024870b8e8f3b9c70ceb84">
+      <p>LogiTune - 7 March 2025 - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/a03c655719024870b8e8f3b9c70ceb84">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/a03c655719024870b8e8f3b9c70ceb84-b0929804d7fc8aa4-full-play.gif">
+    </a>
+  </div>
 
 ## 🙏 Acknowledgments
 
