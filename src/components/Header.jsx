@@ -1,36 +1,46 @@
 import Logo from "../assets/Logo.png";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+import { Button } from "./ui/button";
+import house from "../assets/icons/house.svg";
+import group from "../assets/icons/group.svg";
+import groups from "../assets/icons/groups.svg";
 
 function Header() {
   return (
-    <header className="flex items-center justify-between px-6 bg-white shadow-md">
+    <header className="flex h-[5rem] items-center justify-between px-6 bg-white shadow-md">
       <img
         src={Logo}
         alt="Logo"
-        className="flex w-[366px] justify-center items-center flex-shrink-0"
+        className="flex w-[240px] justify-center items-center flex-shrink-0 mt-[0.5rem]"
       />
-      <div className="flex items-center space-x-4">
-        <Menubar className="rounded-[var(--radius)] border-t border-l border-r-2 border-b-2 border-[#28363F] bg-[var(--background)]">
-          <MenubarMenu>
-            <MenubarTrigger>Library</MenubarTrigger>
-            <MenubarTrigger>Innotrack</MenubarTrigger>
-            <MenubarTrigger>Home</MenubarTrigger>
-          </MenubarMenu>
-        </Menubar>
-
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+      <div className="flex items-center space-x-10">
+        <div className="flex items-center space-x-4">
+          <div className="flex flex-col items-center">
+            <span>
+              <img src={house} alt="house icon" />
+            </span>
+            <p>Home</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <span>
+              <img src={group} alt="group icon" />
+            </span>
+            <p>Communities</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <span>
+              <img src={groups} alt="groups icon" />
+            </span>
+            <p>Coffee Chat</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Button className="bg-gray-900] text-[#28363F] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton">
+            Login
+          </Button>
+          <Button className="bg-[#0264D4] hover:bg-[#0264D4] border-black border-l border-t border-r-2 border-b-2 rounded-lg shadow-customButton">
+            Sign Up
+          </Button>
+        </div>
       </div>
     </header>
   );
