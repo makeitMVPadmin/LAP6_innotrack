@@ -151,7 +151,10 @@ VITE_CONTENT_API=your_content_api
 ### Team Lead
 - <a href="https://www.linkedin.com/in/hilarykhc/">Hilary Chen</a>
 
-## Screenshots 
+## 📸 Screenshots 
+![FireShot Capture 021 - Innotrack -  innotrack web app](https://github.com/user-attachments/assets/267f85ce-e181-483c-99e0-7f68fb2880bd)
+![FireShot Capture 022 - Innotrack -  innotrack web app](https://github.com/user-attachments/assets/569ccbfc-a806-42e2-8bf8-261a6c11ba5f)
+
 
 ## 🙏 Acknowledgments
 
